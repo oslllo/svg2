@@ -1,0 +1,30 @@
+{
+  "name": "oslllo-svg2",
+  "version": "0.0.1",
+  "description": "Convert SVGs to multiple image formats (without puppeteer)",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha --sort"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oslllo/svg2.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oslllo/svg2/issues"
+  },
+  "homepage": "https://github.com/oslllo/svg2#readme",
+  "dependencies": {
+    "canvas": "^2.6.1",
+    "jimp": "^0.14.0",
+    "jsdom": "^16.3.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^8.0.1",
+    "validator": "^13.1.1"
+  }
+}
