@@ -1,0 +1,29 @@
+language: node_js
+
+node:
+  - '12'
+
+before_script:
+  - npm install -g mocha
+  - npm install --dev
+
+cache:
+  npm: false
+
+script:
+  - npm test
+
+branches:
+  except:
+  - dev
+
+  
+jobs:
+  include:
+    - os: linux
+      dist: bionic
+    - os: osx
+      osx_image: xcode11.4
+    - os: windows
+
+after_success: npm run coverage

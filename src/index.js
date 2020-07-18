@@ -6,6 +6,7 @@ const jimp = require("jimp");
 const core = require("./core");
 const { JSDOM } = require("jsdom");
 const validate = require("./validate");
+const { type } = require("os");
 
 var Svg2 = function (input) {
 	var inputIsBuffer = validate.isBuffer(input);
@@ -35,7 +36,7 @@ Svg2.prototype = {
     setDimensions: function (dimensions) {
         return new Promise(async (resolve, reject) => {
             try {
-                if (! dimensions || (typeof dimensions !== "object")) {
+                if (! dimensions || (dimensions.constructor.name !== "Object")) {
                     throw TypeError(`dimensions parameter should be an object, ${typeof dimensions} given.`);
                 }
                 var blank = await core.blank();
@@ -43,8 +44,8 @@ Svg2.prototype = {
                 for (var i = 0; i < names.length; i++) {
                     var name = names[i];
                     var dimension = dimensions[name];
-                    if (dimension == null) {
-                        dimension = jimp.AUTO;
+                    if (dimension == undefined) {
+                        dimensions[name] = jimp.AUTO;
                     }
                 }
                 blank.resize(dimensions.width, dimensions.height);
@@ -78,7 +79,7 @@ Svg2.prototype = {
 				}
 			}
 		} else if (this.svg.hasAttribute("viewBox")) {
-			var viewbox = this.getAttribute("viewBox").split(" ");
+			var viewbox = this.svg.getAttribute("viewBox").split(" ");
 			dd.width = Number(viewbox[2]);
 			dd.height = Number(viewbox[3]);
 		} else {
@@ -96,7 +97,7 @@ Svg2.prototype = {
 			try {
 				var preset = { mime: jimp.MIME_PNG, base64only: false };
 				options = core.setOptions(preset, options);
-				var svg = this.input;
+				var svg = this.svg.outerHTML;
 				var dimensions = this.getDimensions();
 				var window = new JSDOM(svg, { resources: "usable" }).window;
 				var document = window.document;
@@ -180,13 +181,22 @@ Svg2.prototype = {
             }
         });
     },
+    toString: function () {
+        var string = this.svg.outerHTML;
+        this.output = string;
+        return string;
+    },
 	toFile: function (destination) {
         return new Promise(async (resolve, reject) => {
             try {
-                if (validate.isBuffer(this.output) && ! this.output instanceof jimp) {
-                    this.output = await jimp.read(this.output);
+                if(!destination || (typeof destination !== "string")) {
+                    throw TypeError(`destination should be a string, ${typeof destination} given.`);
                 }
-                await this.output.write(destination);
+                if (this.output instanceof jimp) {
+                    await this.output.write(destination);
+                } else {
+                    fs.writeFileSync(destination, this.output);
+                }
                 resolve();
             } catch (err) {
                 reject(err);
@@ -196,12 +206,14 @@ Svg2.prototype = {
     toBuffer: function () {
         return new Promise(async (resolve, reject) => {
             try {
-                if (validate.isBuffer(this.output) && ! this.output instanceof jimp) {
-                    resolve(this.output);
-                } else {
-                    var buffer = this.output.jimp.getBufferAsync;
-                    resolve(buffer);
+                var buffer
+                if (this.output instanceof jimp) {
+                    buffer = await this.output.getBufferAsync(this.output._originalMime);
+                } else if (! validate.isBuffer(this.output)) {
+                    buffer = Buffer.from(this.output);
                 }
+                this.output = buffer;
+                resolve(buffer);
             } catch (err) {
                 reject(err);
             }
