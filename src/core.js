@@ -6,7 +6,7 @@ var Core = function () {};
 
 Core.prototype = {
 	convertToPx: function (input) {
-		if (!input && (typeof input != "string") && (typeof input != "number")) {
+		if (!input && typeof input != "string" && typeof input != "number") {
 			throw TypeError(
 				`input should be of type string or number, ${typeof input}, given`
 			);
@@ -27,12 +27,12 @@ Core.prototype = {
 		return Number(input);
 	},
 	setOptions: function (preset, options = {}) {
-		if ((preset == undefined) || (preset.constructor.name !== "Object")) {
+		if (preset == undefined || preset.constructor.name !== "Object") {
 			throw TypeError(
 				`preset parameter should be an object, ${typeof preset}, given`
 			);
 		}
-		if ((options == undefined) || (options.constructor.name !== "Object")) {
+		if (options == undefined || options.constructor.name !== "Object") {
 			throw TypeError(
 				`options parameter should be an object, ${typeof options}, given`
 			);

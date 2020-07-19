@@ -36,5 +36,5 @@ module.exports = {
 	},
 	isFilePath: function (input) {
 		return fs.existsSync(input) && fs.lstatSync(input).isFile();
-	}
+	},
 };
