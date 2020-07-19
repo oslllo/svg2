@@ -156,40 +156,27 @@ Svg2.prototype = {
 		this.output = string;
 		return string;
 	},
-	toFile: function (destination) {
-		return new Promise(async (resolve, reject) => {
-			try {
-				if (!destination || typeof destination !== "string") {
-					throw TypeError(
-						`destination should be a string, ${typeof destination} given.`
-					);
-				}
-				if (this.output instanceof jimp) {
-					await this.output.write(destination);
-				} else {
-					fs.writeFileSync(destination, this.output);
-				}
-				resolve();
-			} catch (err) {
-				reject(err);
-			}
-		});
+	toFile: async function (destination) {
+        if (!destination || typeof destination !== "string") {
+            throw TypeError(
+                `destination should be a string, ${typeof destination} given.`
+            );
+        }
+        if (this.output instanceof jimp) {
+            await this.output.write(destination);
+        } else {
+            fs.writeFileSync(destination, this.output);
+        }
 	},
-	toBuffer: function () {
-		return new Promise(async (resolve, reject) => {
-			try {
-				var buffer;
-				if (this.output instanceof jimp) {
-					buffer = await this.output.getBufferAsync(this.output._originalMime);
-				} else if (!validate.isBuffer(this.output)) {
-					buffer = Buffer.from(this.output);
-				}
-				this.output = buffer;
-				resolve(buffer);
-			} catch (err) {
-				reject(err);
-			}
-		});
+	toBuffer: async function () {
+        var buffer;
+        if (this.output instanceof jimp) {
+            buffer = await this.output.getBufferAsync(this.output._originalMime);
+        } else if (!validate.isBuffer(this.output)) {
+            buffer = Buffer.from(this.output);
+        }
+        this.output = buffer;
+        return this.output;
 	},
 };
 
