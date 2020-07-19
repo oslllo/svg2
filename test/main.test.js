@@ -153,17 +153,17 @@ describe("index.js", () => {
 		});
 	});
 
-	describe("setDimensions()", () => {
+	describe("resize()", () => {
 		it("can set SVG dimensions with both attributes", async () => {
 			var svg = new Svg2(source);
 			var dimensions = { width: 240, height: 240 };
-			await svg.setDimensions(dimensions);
+			await svg.resize(dimensions);
 			assert.deepEqual(svg.getDimensions(), dimensions);
 		});
 		it("can set SVG dimensions with one attribute", async () => {
 			var svg = new Svg2(source);
 			var dimensions = { height: 400 };
-			await svg.setDimensions(dimensions);
+			await svg.resize(dimensions);
 			assert.deepEqual(svg.getDimensions(), { width: 400, height: 400 });
 		});
 		it("can export a resized SVG", async () => {
@@ -171,8 +171,8 @@ describe("index.js", () => {
 			var name = "500x500.png";
 			var destination = path.resolve(path.join(asserts.resized, name));
 			var dimensions = { width: 500, height: 500 };
-			await svg.setDimensions(dimensions);
-			await svg.toPng();
+			await svg.resize(dimensions);
+			await svg.png();
 			await svg.toFile(destination);
 			var resized = await Svg2.jimp.read(destination);
 			var rb = resized.bitmap;
@@ -215,7 +215,7 @@ describe("index.js", () => {
 		invalidInputs.forEach((input) => {
 			it(`throws with invalid dimensions parameter (${input.name})`, async () => {
 				var svg = new Svg2(source);
-				return expect(svg.setDimensions(input.data)).to.be.rejectedWith(
+				return expect(svg.resize(input.data)).to.be.rejectedWith(
 					TypeError
 				);
 			});
@@ -263,15 +263,15 @@ describe("index.js", () => {
 
 	var source = path.join(asserts.svgs, sources[0]);
 
-	describe("toUri()", () => {
+	describe("uri()", () => {
 		it("can ouput a valid dataURI string", async () => {
 			var svg = new Svg2(source);
-			var uri = await svg.toUri();
+			var uri = await svg.uri();
 			assert.equal(validator.isDataURI(uri), true);
 		});
 		it("can output a valid dataURI base64 string", async () => {
 			var svg = new Svg2(source);
-			var base64 = await svg.toUri({
+			var base64 = await svg.uri({
 				mime: Svg2.jimp.MIME_PNG,
 				base64only: true,
 			});
@@ -281,23 +281,23 @@ describe("index.js", () => {
 			var svg = new Svg2(
 				path.join(asserts.svgs, "without-viewbox-or-dimension-attributes.svg")
 			);
-			return expect(svg.toUri()).to.be.rejectedWith(Error);
+			return expect(svg.uri()).to.be.rejectedWith(Error);
 		});
 	});
 
-	describe("toElement()", () => {
+	describe("element()", () => {
 		it("can convert a SVG string into a SVGSVGElement instance", async () => {
 			var svg = new Svg2(source);
-			var element = svg.toElement();
+			var element = svg.element();
 			assert.equal(element.constructor.name, "SVGSVGElement");
 		});
 	});
 
-	describe("toJpeg()", () => {
+	describe("jpeg()", () => {
 		it(`can convert SVG to a jpeg image and save to path`, async () => {
 			var name = "svg.jpg";
 			var svg = new Svg2(source);
-			await svg.toJpeg();
+			await svg.jpeg();
 			await svg.toFile(path.join(destination, name));
 			assert.equal(fs.existsSync(path.join(asserts.converted, name)), true);
 		});
@@ -305,15 +305,15 @@ describe("index.js", () => {
 			var svg = new Svg2(
 				path.join(asserts.svgs, "without-viewbox-or-dimension-attributes.svg")
 			);
-			return expect(svg.toJpeg()).to.be.rejectedWith(Error);
+			return expect(svg.jpeg()).to.be.rejectedWith(Error);
 		});
 	});
 
-	describe("toPng()", () => {
+	describe("png()", () => {
 		it(`can convert SVG to a png image and save to path`, async () => {
 			var name = "svg.png";
 			var svg = new Svg2(source);
-			await svg.toPng();
+			await svg.png();
 			await svg.toFile(path.join(destination, name));
 			assert.equal(fs.existsSync(path.join(asserts.converted, name)), true);
 		});
@@ -321,15 +321,15 @@ describe("index.js", () => {
 			var svg = new Svg2(
 				path.join(asserts.svgs, "without-viewbox-or-dimension-attributes.svg")
 			);
-			return expect(svg.toPng()).to.be.rejectedWith(Error);
+			return expect(svg.png()).to.be.rejectedWith(Error);
 		});
 	});
 
-	describe("toBmp()", () => {
+	describe("bmp()", () => {
 		it(`can convert SVG to a bmp image and save to path`, async () => {
 			var name = "svg.bmp";
 			var svg = new Svg2(source);
-			await svg.toBmp();
+			await svg.bmp();
 			await svg.toFile(path.join(destination, name));
 			assert.equal(fs.existsSync(path.join(asserts.converted, name)), true);
 		});
@@ -337,15 +337,15 @@ describe("index.js", () => {
 			var svg = new Svg2(
 				path.join(asserts.svgs, "without-viewbox-or-dimension-attributes.svg")
 			);
-			return expect(svg.toBmp()).to.be.rejectedWith(Error);
+			return expect(svg.bmp()).to.be.rejectedWith(Error);
 		});
 	});
 
-	describe("toTiff()", () => {
+	describe("tiff()", () => {
 		it(`can convert SVG to a png image and save to path`, async () => {
 			var name = "svg.tiff";
 			var svg = new Svg2(source);
-			await svg.toTiff();
+			await svg.tiff();
 			await svg.toFile(path.join(destination, name));
 			assert.equal(fs.existsSync(path.join(asserts.converted, name)), true);
 		});
@@ -353,7 +353,7 @@ describe("index.js", () => {
 			var svg = new Svg2(
 				path.join(asserts.svgs, "without-viewbox-or-dimension-attributes.svg")
 			);
-			return expect(svg.toTiff()).to.be.rejectedWith(Error);
+			return expect(svg.tiff()).to.be.rejectedWith(Error);
 		});
 	});
 
@@ -383,7 +383,7 @@ describe("index.js", () => {
         invalidInputs.forEach((input) => {
             it(`throws with invalid destination parameter (${input.name})`, async () => {
                 var svg = new Svg2(source);
-                await svg.toPng();
+                await svg.png();
                 return expect(svg.toFile(input.data)).to.be.rejectedWith(TypeError);
             });
         });
@@ -391,7 +391,7 @@ describe("index.js", () => {
             var svg = new Svg2(source);
             var destination = path.join(asserts.exported, "export.png");
             try {
-                await svg.toPng();
+                await svg.png();
                 await svg.toBuffer();
                 await svg.toFile(destination);
             } catch (err) {
@@ -402,14 +402,14 @@ describe("index.js", () => {
     describe("toBuffer()", () => {
         it("can convert none buffer output to a buffer", async () => {
             var svg = new Svg2(source);
-            svg.toString();
+            await svg.string();
             assert.isFalse(Buffer.isBuffer(svg.output));
             await svg.toBuffer();
             assert.isTrue(Buffer.isBuffer(svg.output));
         });
         it("can convert jimp instance output to a buffer", async () => {
             var svg = new Svg2(source);
-            await svg.toPng();
+            await svg.png();
             assert.isTrue(svg.output instanceof Svg2.jimp);
             await svg.toBuffer();
             assert.isTrue(Buffer.isBuffer(svg.output));

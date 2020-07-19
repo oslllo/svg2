@@ -6,7 +6,6 @@ const jimp = require("jimp");
 const core = require("./core");
 const { JSDOM } = require("jsdom");
 const validate = require("./validate");
-const { type } = require("os");
 
 var Svg2 = function (input) {
 	var inputIsBuffer = validate.isBuffer(input);
@@ -25,37 +24,29 @@ var Svg2 = function (input) {
 	}
     this.input = input;
     this.output = null;
-	this.svg = new JSDOM(this.input, {
-		resources: "usable",
-	}).window.document.getElementsByTagName("svg")[0];
+	this.svg = this.element();
 };
 
 Svg2.jimp = jimp;
 
 Svg2.prototype = {
-    setDimensions: function (dimensions) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                if (! dimensions || (dimensions.constructor.name !== "Object")) {
-                    throw TypeError(`dimensions parameter should be an object, ${typeof dimensions} given.`);
-                }
-                var blank = await core.blank();
-                var names = ["width", "height"];
-                for (var i = 0; i < names.length; i++) {
-                    var name = names[i];
-                    var dimension = dimensions[name];
-                    if (dimension == undefined) {
-                        dimensions[name] = jimp.AUTO;
-                    }
-                }
-                blank.resize(dimensions.width, dimensions.height);
-                this.svg.setAttribute("width", blank.bitmap.width);
-                this.svg.setAttribute("height", blank.bitmap.height);
-                resolve();
-            } catch (err) {
-                reject(err);
+    resize: async function (dimensions) {
+        if (! dimensions || (dimensions.constructor.name !== "Object")) {
+            throw TypeError(`dimensions parameter should be an object, ${typeof dimensions} given.`);
+        }
+        var blank = await core.blank();
+        var names = ["width", "height"];
+        for (var i = 0; i < names.length; i++) {
+            var name = names[i];
+            var dimension = dimensions[name];
+            if (dimension == undefined) {
+                dimensions[name] = jimp.AUTO;
             }
-        });
+        }
+        blank.resize(dimensions.width, dimensions.height);
+        this.svg.setAttribute("width", blank.bitmap.width);
+        this.svg.setAttribute("height", blank.bitmap.height);
+        return
     },
 	getDimensions: function () {
 		var dimension = {
@@ -89,99 +80,76 @@ Svg2.prototype = {
 		}
 		return dd;
 	},
-	toElement: function () {
-		return this.svg;
+	element: function (input) {
+        input = input ? input : this.input;
+        return new JSDOM(this.input, {
+            resources: "usable",
+        }).window.document.getElementsByTagName("svg")[0];
 	},
-	toUri: function (options) {
-		return new Promise((resolve, reject) => {
-			try {
-				var preset = { mime: jimp.MIME_PNG, base64only: false };
-				options = core.setOptions(preset, options);
-				var svg = this.svg.outerHTML;
-				var dimensions = this.getDimensions();
-				var window = new JSDOM(svg, { resources: "usable" }).window;
-				var document = window.document;
-				var canvas = document.createElement("canvas");
-				var image = new window.Image();
-				var ctx = canvas.getContext("2d");
-				image.style = "position: absolute; top: -9999px";
-				document.body.appendChild(image);
-				const encoded = encodeURIComponent(svg)
-					.replace(/'/g, "%27")
-					.replace(/"/g, "%22");
-				const header = "data:image/svg+xml,";
-				const encodedHeader = header + encoded;
-				image.src = encodedHeader;
-				image.onload = function () {
-					canvas.width = dimensions.width;
-					canvas.height = dimensions.height;
-					ctx.drawImage(image, 0, 0);
-					var uri = canvas.toDataURL(options.mime);
-					if (options.base64only) {
-						uri = uri.replace(new RegExp(`^data:${options.mime};base64,`), "");
-					}
-					resolve(uri);
-				};
-			} catch (err) {
-				reject(err);
-			}
-		});
+	uri: async function (options) {
+        var preset = { mime: jimp.MIME_PNG, base64only: false };
+        options = core.setOptions(preset, options);
+        var svg = this.svg.outerHTML;
+        var dimensions = this.getDimensions();
+        var window = new JSDOM(svg, { resources: "usable" }).window;
+        var document = window.document;
+        var canvas = document.createElement("canvas");
+        var image = new window.Image();
+        var ctx = canvas.getContext("2d");
+        image.style = "position: absolute; top: -9999px";
+        document.body.appendChild(image);
+        const encoded = encodeURIComponent(svg)
+            .replace(/'/g, "%27")
+            .replace(/"/g, "%22");
+        const header = "data:image/svg+xml,";
+        const encodedHeader = header + encoded;
+        image.src = encodedHeader;
+        function loading () {
+            return new Promise((resolve, reject) => {
+                image.onload = () => resolve();
+            });
+        }
+        await loading();
+        canvas.width = dimensions.width;
+        canvas.height = dimensions.height;
+        ctx.drawImage(image, 0, 0);
+        var uri = canvas.toDataURL(options.mime);
+        if (options.base64only) {
+            uri = uri.replace(new RegExp(`^data:${options.mime};base64,`), "");
+        }
+        return uri;
 	},
-	toPng: function (options) {
-		return new Promise(async (resolve, reject) => {
-            try {
-                var preset = { transparent: false };
-                options = core.setOptions(preset, options);
-                var uri = await this.toUri({ mime: jimp.MIME_PNG, base64only: true });
-                var png = await jimp.read(Buffer.from(uri, "base64"));
-               if (!options.transparent) {
-                   var blank = await core.blank(this.getDimensions());
-                   var png = blank.composite(png, 0, 0);
-               }
-               this.output = png;
-               resolve(png);
-            } catch (err) {
-                reject(err);
-            }
-		});
+	png: async function (options) {
+        var preset = { transparent: false };
+        options = core.setOptions(preset, options);
+        var uri = await this.uri({ mime: jimp.MIME_PNG, base64only: true });
+        var png = await jimp.read(Buffer.from(uri, "base64"));
+       if (!options.transparent) {
+           var blank = await core.blank(this.getDimensions());
+           var png = blank.composite(png, 0, 0);
+       }
+       this.output = png;
+       return this.output
     },
-    toJpeg: function () {
-        return new Promise(async (resolve, reject) => {
-            try {
-                var png = await this.toPng();
-                var jpeg = await png.getBufferAsync(jimp.MIME_JPEG);
-                this.output = await jimp.read(jpeg);
-                resolve(this.output);
-            } catch (err) {
-                reject(err);
-            }
-        });
+    jpeg: async function () {
+        var png = await this.png();
+        var jpeg = await png.getBufferAsync(jimp.MIME_JPEG);
+        this.output = await jimp.read(jpeg);
+        return this.output;
     },
-    toTiff: function () {
-        return new Promise(async (resolve, reject) => {
-            try {
-                var png = await this.toPng();
-                var tiff = await png.getBufferAsync(jimp.MIME_TIFF);
-                this.output = await jimp.read(tiff);
-                resolve(this.output);
-            } catch (err) {
-                reject(err);
-            }
-        });
+    tiff: async function () {
+        var png = await this.png();
+        var tiff = await png.getBufferAsync(jimp.MIME_TIFF);
+        this.output = await jimp.read(tiff);
+        return this.output;
     },
-    toBmp: function () {
-        return new Promise(async (resolve, reject) => {
-            try {
-                var png = await this.toPng();
-                var bmp = await png.getBufferAsync(jimp.MIME_BMP);
-                this.output = await jimp.read(bmp);
-                resolve(this.output);
-            } catch (err) {
-                reject(err);
-            }
-        });
+    bmp: async function () {
+        var png = await this.png();
+        var bmp = await png.getBufferAsync(jimp.MIME_BMP);
+        this.output = await jimp.read(bmp);
+        return this.output;
     },
-    toString: function () {
+    string: async function () {
         var string = this.svg.outerHTML;
         this.output = string;
         return string;
