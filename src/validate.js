@@ -39,7 +39,7 @@ const svg = function (val) {
  * Is this value a path to a file?
  * @private
  */
- const pathToFile = function (val) {
+const pathToFile = function (val) {
 	return fs.existsSync(val) && fs.lstatSync(val).isFile();
 };
 
@@ -56,7 +56,19 @@ const defined = function (val) {
  * @private
  */
 const object = function (val) {
-	return typeof val === "object";
+	if (val == undefined) {
+		return false;
+	}
+	return val.constructor.name === "Object";
+};
+
+const _constructor = function (val) {
+	try {
+		Reflect.construct(String, [], val);
+	} catch (e) {
+		return false;
+	}
+	return true;
 };
 
 /**
@@ -145,5 +157,5 @@ module.exports = {
 	integer: integer,
 	inRange: inRange,
 	inArray: inArray,
-	pathToFile: pathToFile
-}
+	pathToFile: pathToFile,
+};

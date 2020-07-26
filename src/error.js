@@ -9,12 +9,12 @@
  * @returns {Error} Containing the formatted message.
  * @private
  */
-const invalidParameterError = function (name, expected, actual) {
-	return new Error(
-		`Expected ${expected} for ${name} but received ${actual} of type ${typeof actual}`
+ const invalidParameterError = function (name, expected, actual) {
+	return new TypeError(
+		`Expected <${expected}> for [${name}] but received ${actual} of type <${typeof actual}>`
 	);
 };
 
 module.exports = {
-    invalidParameterError: invalidParameterError
-}
+	invalidParameterError: invalidParameterError,
+};

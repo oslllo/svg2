@@ -3,64 +3,15 @@
 const fs = require("fs");
 const jimp = require("jimp");
 const is = require("./validate");
+const error = require("./error");
 const { JSDOM } = require("jsdom");
-const helper = require("./helper");
-const exception = require("./exception");
+const constants = require("./constants");
 
-const formats = {
-    bmp: jimp.MIME_BMP,
-    png: jimp.MIME_PNG,
-    tiff: jimp.MIME_TIFF,
-    jpeg: jimp.MIME_JPEG
-}
+const formats = constants.FORMATS;
 
-function _process(callback) {
-    this.toUri({ 
-        mime: jimp.MIME_PNG, 
-        base64Only: true }, (err, uri) => {
-        jimp.read(Buffer.from(uri, "base64"), async (err, png) => {
-            if (! this.options.pngTransparency || this.output.format !== formats.png) {
-                var blankImage = await helper.blankImage(this.getDimensions());
-                png = blankImage.composite(png, 0, 0);
-            }
-            if (this.output.format === formats.png) {
-                png.getBuffer(formats.png, callback);
-                return;
-            } else {
-                for (format in formats) {
-                    if (formats[format] === this.output.format) {
-                        jimp.getBuffer(format, callback);
-                        return;
-                    }
-                }
-            }
-        });
-    });
-}
-
-function _pipeline(callback) {
-    if (is.fn(callback)) {
-        this._process((err, buffer) => {
-            this.output.file = buffer;
-            callback(err, buffer);
-        });
-        return this;
-    } else {
-        return new Promise((resolve, reject) => {
-            this._process((err, buffer) => {
-                this.output.file = buffer;
-                err ? reject(err) : resolve(buffer);
-            });
-        });
-    }
-}
-
-function uri(options) {
-    this.output.format = formats.uri;
-    return this;
-}
-
-function png(options) {
+function png(options = {}) {
+    this.options.update("png", options);
+    options = this.options.get("png");
     this.output.format = formats.png;
     return this;
 }
@@ -80,60 +31,31 @@ function bmp() {
     return this;
 }
 
-function getDimensions () {
-    var svg = this.input.element;
-    var dimension = {
-        names: ["width", "height"],
-        data: { width: 0, height: 0 },
-    };
-    var dn = dimension.names;
-    var dd = dimension.data;
-    if (svg.hasAttribute(dn[0]) && svg.hasAttribute(dn[1])) {
-        var height = svg.getAttribute(dn[0]);
-        var width = svg.getAttribute(dn[1]);
-        for (var i = 0; i < dn.length; i++) {
-            var name = dn[i];
-            switch (name) {
-                case "width":
-                    dd.width = helper.toPx(width);
-                    break;
-                case "height":
-                    dd.height = helper.toPx(height);
-                    break;
-            }
-        }
-    } else if (svg.hasAttribute("viewBox")) {
-        var viewbox = svg.getAttribute("viewBox").split(" ");
-        dd.width = Number(viewbox[2]);
-        dd.height = Number(viewbox[3]);
-    } else {
-        throw Error(
-            `Failed to get SVG dimensions, height/width and viewBox attributes are not set on SVG.`
-        );
-    }
-    return dd;
+function toElement (input) {
+    input = input ? input : this.svg.html();
+    input = this.check(input);
+    return new JSDOM(input, {
+        resources: "usable",
+    }).window.document.getElementsByTagName("svg")[0];
 }
 
-// { mime: jimp.MIME_PNG, base64only: false };
-function toUri(options, callback) {
-    if (is.object(options)) {
-        if (is.defined(options.mime)) {
-            this.options.uriMime = options.mime;
-        }
-        if (is.defined(options.base64Only)) {
-            this.options.uriBase64Only = options.base64Only
-        }
+function toUri(options = {}, callback) {
+    if (arguments.length === 1 && is.fn(options)) {
+        callback = options;
+    } else {
+        this.options.update("uri", options);
     }
-    var mime = this.options.uriMime;
-    var base64only = this.options.uriBase64Only
-    var svg = this.input.string;
-    var dimensions = this.getDimensions();
+    options = this.options.get("uri");
+    var mime = options.mime;
+    var base64 = options.base64
+    var svg = this.svg.html();
+    var dimensions = this.svg.dimensions();
     var window = new JSDOM(svg, { resources: "usable" }).window;
     var document = window.document;
     var canvas = document.createElement("canvas");
     var image = new window.Image();
     var ctx = canvas.getContext("2d");
-    image.style = "position: absolute; top: -9999px";
+    image.style = "position: absolute; top: -9999px; bottom: -9999px;";
     document.body.appendChild(image);
     const encoded = encodeURIComponent(svg)
         .replace(/'/g, "%27")
@@ -141,28 +63,28 @@ function toUri(options, callback) {
     const header = "data:image/svg+xml,";
     const encodedHeader = header + encoded;
     image.src = encodedHeader;
-    function draw() {
+    function generateDataUri() {
         canvas.width = dimensions.width;
         canvas.height = dimensions.height;
         ctx.drawImage(image, 0, 0);
         var uri = canvas.toDataURL(mime);
-        if (base64only) {
+        if (base64) {
             uri = uri.replace(new RegExp(`^data:${mime};base64,`), "");
         }
         return uri;
     }
     if (is.defined(callback)) {
         if (!is.fn(callback)) {
-            throw exception.invalidParameterError("callback", "function", callback);
+            throw error.invalidParameterError("callback", "function", callback);
         }
         image.onload = () => {
-            var uri = draw();
+            var uri = generateDataUri();
             callback(null, uri);
         };
     } else {
         return new Promise((resolve, reject) => {
             image.onload = () => {
-                var uri = draw();
+                var uri = generateDataUri();
                 resolve(uri);
             };
         });
@@ -170,11 +92,24 @@ function toUri(options, callback) {
 }
 
 function toBuffer(callback) {
-    return this._pipeline(callback);
+    if (is.defined(callback) && !is.fn(callback) && callback !== undefined) {
+        throw error.invalidParameterError("callback", "function", callback);
+    }
+    return this.processor.pipeline(callback);
 }
 
-function toFile(outputPath, callback) {
-    if (! outputPath || outputPath.length === 0) {
+function toFile(destination, callback) {
+    if (!destination || typeof destination !== "string") {
+        const err = new TypeError(
+            `destination should be a string, ${typeof destination} given.`
+        );
+        if (is.fn(callback)) {
+            callback(err);
+        } else {
+            return Promise.reject(err);
+        }
+    }
+    if (! destination || destination.length === 0) {
         const err = new TypeError('Output file path is missing');
         if (is.fn(callback)) {
             callback(err);
@@ -183,16 +118,16 @@ function toFile(outputPath, callback) {
         }
     } else {
         if (is.fn(callback)) {
-            this._pipeline((err, buffer) => {
-                fs.writeFile(outputPath, buffer, callback);
+            this.processor.pipeline((err, buffer) => {
+                fs.writeFile(destination, buffer, callback);
             });
         } else {
             return new Promise((resolve, reject) => {
-                this._pipeline((err, buffer) => {
+                this.processor.pipeline((err, buffer) => {
                     if (err) {
                         throw err;
                     }
-                    fs.writeFile(outputPath, buffer, (err) => {
+                    fs.writeFile(destination, buffer, (err) => {
                         err ? reject(err) : resolve();
                     });
                 });
@@ -201,16 +136,8 @@ function toFile(outputPath, callback) {
     }
 }
 
-function toElement (input) {
-    input = input ? input : this.input.string;
-    return new JSDOM(input, {
-        resources: "usable",
-    }).window.document.getElementsByTagName("svg")[0];
-}
-
 module.exports = function (Svg2) {
     Object.assign(Svg2.prototype, {
-        uri: uri,
         png: png,
         bmp: bmp,
         jpeg: jpeg,
@@ -219,9 +146,5 @@ module.exports = function (Svg2) {
         toFile: toFile,
         toBuffer: toBuffer,
         toElement: toElement,
-        getDimensions: getDimensions,
-        // private
-        _process: _process,
-        _pipeline: _pipeline
     });
 }
