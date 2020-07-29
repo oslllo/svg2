@@ -7,7 +7,7 @@ const error = require("./error");
 const is = require("./validate");
 const Option = require("./option");
 const Processor = require("./processor");
-const constants = require("./constants");
+const { AUTO, FORMATS } = require("./constants");
 
 const Svg2 = function (input) {
 	if (!(this instanceof Svg2)) {
@@ -31,22 +31,12 @@ const Svg2 = function (input) {
 };
 
 Svg2.prototype = {
-	blank: function (dimensions, background = "ffffff") {
-		return new Promise((resolve, reject) => {
-			if (!is.defined(dimensions) || dimensions.constructor.name !== "Object") {
-				throw error.invalidParameterError("input", "object", dimensions);
-			}
-			this.options.update("blank", dimensions);
-			dimensions = this.options.get("blank");
-			new jimp(
-				dimensions.width,
-				dimensions.height,
-				background,
-				(err, image) => {
-					err ? reject(err) : resolve(image);
-				}
-			);
-		});
+	blank: function (
+		width = jimp.AUTO,
+		height = jimp.AUTO,
+		background = "ffffff"
+	) {
+		return new jimp(width, height, background);
 	},
 	check: function (input) {
 		if (arguments.length === 1 && !is.defined(input)) {
@@ -76,6 +66,10 @@ Svg2.prototype = {
 	},
 };
 
-Svg2.AUTO = constants.AUTO;
+Svg2.AUTO = AUTO;
+Svg2.BMP = FORMATS.bmp
+Svg2.PNG = FORMATS.png
+Svg2.TIFF = FORMATS.tiff
+Svg2.JPEG = FORMATS.jpeg
 
 module.exports = Svg2;

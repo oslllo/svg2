@@ -7,13 +7,18 @@ const constants = require("./constants");
 
 const Svg = function (instance) {
 	this.instance = instance;
-	this.update(instance.toElement(instance.input.string));
+	this.update(instance.toElement(instance.input.string), true);
 };
 
 Svg.prototype = {
-	update: function (svg) {
-		if (svg.constructor.name !== "SVGSVGElement") {
-			throw error.invalidParameterError("svg", "SVGSVGElement", svg);
+	update: function (svg, isElement = false) {
+		if (isElement) {
+			if (svg.constructor.name !== "SVGSVGElement") {
+				throw error.invalidParameterError("svg", "SVGSVGElement", svg);
+			}
+		} else {
+			svg = this.instance.check(svg);
+			svg = this.instance.toElement(svg);
 		}
 		this.instance.input.element = svg;
 		this.instance.input.string = svg.outerHTML;
@@ -27,7 +32,7 @@ Svg.prototype = {
 			throw error.invalidParameterError("input", "object or number", input);
 		}
 		var svg = this.element();
-		var dimensions = this.dimensions();
+		var current = this.dimensions();
 		var output = {
 			scale: 0,
 			width: undefined,
@@ -36,18 +41,18 @@ Svg.prototype = {
 		function set(dimension) {
 			var opposite = dimension == "height" ? "width" : "height";
 			output[dimension] = input[dimension];
-			//! scaling might be broken here
-			output.scale = input.height / dimensions[dimension];
 			if (input[opposite] === constants.AUTO) {
 				output[opposite] =
-					input[dimension] - dimensions[dimension] + dimensions[opposite];
+					input[dimension] - current[dimension] + current[opposite];
 			} else {
-				output[opposite] = dimensions[opposite];
+				output[opposite] = current[opposite];
 			}
+			// output.scale = input[dimension] / current[dimension];
+			return output;
 		}
 		if (is.number(input)) {
-			output.width = dimensions.width * input;
-			output.height = dimensions.height * input;
+			output.width = current.width * input;
+			output.height = current.height * input;
 			output.scale = input;
 		} else {
 			if (
@@ -58,13 +63,10 @@ Svg.prototype = {
 			) {
 				output.width = input.width;
 				output.height = input.height;
-				output.scale =
-					(input.width / dimensions.width + input.height / dimensions.height) /
-					2;
 			} else if (is.defined(input.width) && input.width !== constants.AUTO) {
-				set("width");
+				output = set("width");
 			} else if (is.defined(input.height) && input.height !== constants.AUTO) {
-				set("height");
+				output = set("height");
 			} else {
 				throw error.invalidParameterError(
 					"input",
@@ -72,10 +74,12 @@ Svg.prototype = {
 					input
 				);
 			}
+			output.scale =
+				(output.width / current.width + output.height / current.height) / 2;
 		}
 		svg.setAttribute("width", output.width);
 		svg.setAttribute("height", output.height);
-		this.update(svg);
+		this.update(svg, true);
 		this.instance.output.resize = output;
 		return this.instance;
 	},

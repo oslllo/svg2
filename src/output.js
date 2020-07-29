@@ -99,33 +99,29 @@ function toBuffer(callback) {
 }
 
 function toFile(destination, callback) {
-    if (!destination || typeof destination !== "string") {
-        const err = new TypeError(
-            `destination should be a string, ${typeof destination} given.`
-        );
-        if (is.fn(callback)) {
-            callback(err);
-        } else {
-            return Promise.reject(err);
-        }
-    }
-    if (! destination || destination.length === 0) {
-        const err = new TypeError('Output file path is missing');
+    if (! destination || destination.length === 0 || typeof destination !== "string") {
+        const err = error.invalidParameterError("destination", "string", destination);
         if (is.fn(callback)) {
             callback(err);
         } else {
             return Promise.reject(err);
         }
     } else {
-        if (is.fn(callback)) {
-            this.processor.pipeline((err, buffer) => {
-                fs.writeFile(destination, buffer, callback);
-            });
+        if (callback || is.defined(callback)) {
+            if(is.fn(callback)) {
+                this.processor.pipeline((err, buffer) => {
+                    fs.writeFile(destination, buffer, callback);
+                });
+            } else {
+                throw error.invalidParameterError("callback", "function", callback);
+            }
         } else {
             return new Promise((resolve, reject) => {
+                var error;
                 this.processor.pipeline((err, buffer) => {
                     if (err) {
-                        throw err;
+                        reject(err);
+                        return;
                     }
                     fs.writeFile(destination, buffer, (err) => {
                         err ? reject(err) : resolve();

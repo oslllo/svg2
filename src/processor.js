@@ -12,23 +12,25 @@ function Processor(instance) {
 
 Processor.prototype = {
 	pipeline: function (callback) {
-		// Throw if format is not selected
+		var format = this.instance.output.format;
+		if (!format || !is.defined(format)) {
+			const err = new Error(`Output format was not set.`);
+			callback(err);
+			return;
+		}
 		var i = this.instance;
-		switch (true) {
-			case is.fn(callback):
+		if (is.fn(callback)) {
+			this.process((err, buffer) => {
+				i.output.file = buffer;
+				callback(err, buffer);
+			});
+		} else {
+			return new Promise((resolve, reject) => {
 				this.process((err, buffer) => {
 					i.output.file = buffer;
-					callback(err, buffer);
+					err ? reject(err) : resolve(buffer);
 				});
-				return i;
-				break;
-			default:
-				return new Promise((resolve, reject) => {
-					this.process((err, buffer) => {
-						i.output.file = buffer;
-						err ? reject(err) : resolve(buffer);
-					});
-				});
+			});
 		}
 	},
 	process: function (callback) {
@@ -37,22 +39,18 @@ Processor.prototype = {
 			try {
 				var png = await jimp.read(Buffer.from(uri, "base64"));
 				if (!i.options.get("png").transparent || i.output.format !== formats.png) {
-					var getBlankImage = await i.blank(i.svg.dimensions());
-					png = getBlankImage.composite(png, 0, 0);
+					var dimensions = i.svg.dimensions();
+					var blank = await i.blank(dimensions.width, dimensions.height);
+					png = blank.composite(png, 0, 0);
 				}
-				if (i.output.format === formats.png) {
-					png.getBuffer(formats.png, callback);
-					return;
-				} else {
-					for (var format in formats) {
-						if (formats[format] === i.output.format) {
-							png.getBuffer(formats[format], callback);
-							break;
-						}
+				for (var format in formats) {
+					if (formats[format] === i.output.format) {
+						png.getBuffer(formats[format], callback);
+						break;
 					}
 				}
 			} catch (err) {
-				throw err;
+				callback(err);
 			}
 		});
 	},
