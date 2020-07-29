@@ -11,7 +11,19 @@
     "type": "git",
     "url": "git+https://github.com/oslllo/svg2.git"
   },
-  "author": "",
+  "author": "Ghustavh Ehm <https://github.com/Ghustavh97>",
+  "contributors": [
+    {
+      "name": "Ghustavh Ehm",
+      "email": "Ghustavh97@gmail.com",
+      "url": "https://github.com/Ghustavh97"
+    },
+    {
+      "name": "oslllo",
+      "email": "oslllo.com@gmail.com",
+      "url": "https://github.com/oslllo"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/oslllo/svg2/issues"
