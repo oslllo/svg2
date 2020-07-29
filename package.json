@@ -11,6 +11,23 @@
     "type": "git",
     "url": "git+https://github.com/oslllo/svg2.git"
   },
+  "keywords": [
+    "svg2",
+    "oslllo",
+    "convert",
+    "svg-png",
+    "svg-bmp",
+    "svg-jpeg",
+    "svg-tiff",
+    "svg-image",
+    "svg-image",
+    "svg-to-png",
+    "svg-to-bmp",
+    "svg-to-jpeg",
+    "svg-to-tiff",
+    "svg-to-image",
+    "svg-to-element"
+  ],
   "author": "Ghustavh Ehm <https://github.com/Ghustavh97>",
   "contributors": [
     {
