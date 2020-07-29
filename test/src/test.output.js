@@ -112,12 +112,14 @@ describe("output.js", () => {
 					var raw = fs.readFileSync(source, "utf-8");
 					var svg = Svg2(source);
 					var element = svg.toElement();
-					assert.isTrue(
-						element.constructor.name === "SVGSVGElement",
+					assert.equal(
+						element.constructor.name,
+						"SVGSVGElement",
 						"element is not an instance of SVGSVGElement"
 					);
-					assert.isTrue(
-						svg.svg.html() === raw,
+					assert.equal(
+						svg.svg.html(),
+						raw,
 						"raw svg html does not match element html"
 					);
 				});
@@ -126,12 +128,14 @@ describe("output.js", () => {
 					var raw = fs.readFileSync(source, "utf-8");
 					var svg = Svg2(source);
 					var element = svg.toElement(raw);
-					assert.isTrue(
-						element.constructor.name === "SVGSVGElement",
+					assert.equal(
+						element.constructor.name,
+						"SVGSVGElement",
 						"element is not an instance of SVGSVGElement"
 					);
-					assert.isTrue(
-						element.outerHTML === raw,
+					assert.equal(
+						element.outerHTML,
+						raw,
 						"raw svg html does not match element html"
 					);
 				});

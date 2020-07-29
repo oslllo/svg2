@@ -42,12 +42,12 @@ describe("svg.js", () => {
 						path.join(path2.svgs, "normal-2.svg"),
 						"utf-8"
 					);
-					assert.isFalse(
-						current === update,
-						"current and new SVG strings are not identical"
+					assert.notEqual(
+						current, update,
+						"current and new SVG strings are identical"
 					);
 					svg.update(instance.toElement(update), true);
-					assert.isTrue(update === svg.html(), "SVG failed to update");
+					assert.equal(update, svg.html(), "SVG failed to update");
 				});
 				it("can update instance SVG using (SVG String)", () => {
 					var instance = Svg2(path.join(path2.svgs, "normal.svg"));
@@ -57,12 +57,12 @@ describe("svg.js", () => {
 						path.join(path2.svgs, "normal-2.svg"),
 						"utf-8"
 					);
-					assert.isFalse(
-						current === update,
-						"current and new SVG strings are not identical"
+					assert.notEqual(
+						current, update,
+						"current and new SVG strings are identical"
 					);
 					svg.update(update);
-					assert.isTrue(update === svg.html(), "SVG failed to update");
+					assert.equal(update, svg.html(), "SVG failed to update");
 				});
 				it("can update instance SVG using (path)", () => {
 					var instance = Svg2(path.join(path2.svgs, "normal.svg"));
@@ -70,12 +70,12 @@ describe("svg.js", () => {
 					var current = svg.html();
 					var source = path.join(path2.svgs, "normal-2.svg");
 					var update = fs.readFileSync(source, "utf-8");
-					assert.isFalse(
-						current === update,
-						"current and new SVG strings are not identical"
+					assert.notEqual(
+						current, update,
+						"current and new SVG strings are identical"
 					);
 					svg.update(update);
-					assert.isTrue(update === svg.html(), "SVG failed to update");
+					assert.equal(update, svg.html(), "SVG failed to update");
 				});
 			});
 		});
@@ -425,7 +425,7 @@ describe("svg.js", () => {
 				it(`outputs a valid SVG element`, () => {
 					var instance = Svg2(path.join(path2.svgs, "normal-2.svg"));
 					var svg = instance.svg;
-					assert.isTrue(svg.element().constructor.name === "SVGSVGElement");
+					assert.equal(svg.element().constructor.name, "SVGSVGElement");
 				});
 			});
 		});
