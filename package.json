@@ -1,7 +1,7 @@
 {
   "name": "oslllo-svg2",
   "version": "0.0.1",
-  "description": "Convert a SVG to multiple image formats (without puppeteer or a headless browswer)",
+  "description": "Convert a SVG to multiple image formats (without puppeteer or a headless browser)",
   "main": "src/index.js",
   "scripts": {
     "test": "nyc mocha --sort",
