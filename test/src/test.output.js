@@ -5,6 +5,7 @@ const fs = require("fs-extra");
 const Svg2 = require("../../src");
 const looksame = require("looks-same");
 const validator = require("validator");
+const is = require("../../src/validate");
 const { path2, inputs } = require("./helper");
 const constants = require("../../src/constants");
 const { assert, expect } = require("chai").use(require("chai-as-promised"));
@@ -110,15 +111,19 @@ describe("output.js", () => {
 				it("can return svg instance element with no input parameter", () => {
 					var source = path.join(path2.svgs, "normal.svg");
 					var raw = fs.readFileSync(source, "utf-8");
-					var svg = Svg2(source);
-					var element = svg.toElement();
+					var instance = Svg2(source);
+					var svg = instance.svg;
+					var element = instance.toElement();
+					var current = svg.html();
 					assert.equal(
 						element.constructor.name,
 						"SVGSVGElement",
 						"element is not an instance of SVGSVGElement"
 					);
+					assert.isTrue(is.svg(current), `current SVG is not a valid svg, ${current}`);
+					assert.isTrue(is.svg(raw), `raw SVG is not a valid svg, ${raw}`);
 					assert.equal(
-						svg.svg.html(),
+						current,
 						raw,
 						"raw svg html does not match element html"
 					);
@@ -128,13 +133,16 @@ describe("output.js", () => {
 					var raw = fs.readFileSync(source, "utf-8");
 					var svg = Svg2(source);
 					var element = svg.toElement(raw);
+					var outerHTML = element.outerHTML;
 					assert.equal(
 						element.constructor.name,
 						"SVGSVGElement",
 						"element is not an instance of SVGSVGElement"
 					);
+					assert.isTrue(is.svg(outerHTML), `outerHTML SVG is not a valid svg, ${outerHTML}`);
+					assert.isTrue(is.svg(raw), `raw SVG is not a valid svg, ${raw}`);
 					assert.equal(
-						element.outerHTML,
+						outerHTML,
 						raw,
 						"raw svg html does not match element html"
 					);

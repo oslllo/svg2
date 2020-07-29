@@ -42,6 +42,8 @@ describe("svg.js", () => {
 						path.join(path2.svgs, "normal-2.svg"),
 						"utf-8"
 					);
+					assert.isTrue(is.svg(current), `current SVG is not a valid svg, ${current}`);
+					assert.isTrue(is.svg(update), `update SVG is not a valid svg, ${update}`);
 					assert.notEqual(
 						current, update,
 						"current and new SVG strings are identical"
@@ -57,6 +59,8 @@ describe("svg.js", () => {
 						path.join(path2.svgs, "normal-2.svg"),
 						"utf-8"
 					);
+					assert.isTrue(is.svg(current), `current SVG is not a valid svg, ${current}`);
+					assert.isTrue(is.svg(update), `update SVG is not a valid svg, ${update}`);
 					assert.notEqual(
 						current, update,
 						"current and new SVG strings are identical"
@@ -70,6 +74,8 @@ describe("svg.js", () => {
 					var current = svg.html();
 					var source = path.join(path2.svgs, "normal-2.svg");
 					var update = fs.readFileSync(source, "utf-8");
+					assert.isTrue(is.svg(current), `current SVG is not a valid svg, ${current}`);
+					assert.isTrue(is.svg(update), `update SVG is not a valid svg, ${update}`);
 					assert.notEqual(
 						current, update,
 						"current and new SVG strings are identical"
