@@ -30,7 +30,7 @@ describe("constructor.js", () => {
 		describe("svg2.blank()", () => {
 			describe("- arguments", () => {
 				describe("[dimensions]", () => {
-
+					
 				});
 				describe("[background]", () => {
 					
