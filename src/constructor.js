@@ -60,7 +60,7 @@ Svg2.prototype = {
 			input = fs.readFileSync(input, "utf-8");
 		}
 		if (!is.svg(input)) {
-			throw error.invalidParameterError("input", "valid SVG", "invalid SVG");
+			throw error.invalidParameterError("input", "valid SVG", `invalid SVG: ${input}`);
 		}
 		return input;
 	},
