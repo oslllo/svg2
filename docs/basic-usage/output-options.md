@@ -50,7 +50,7 @@ Svg2("path/to/svg/example.svg").png()
 ###### Get | `png with transparent background`
 
 ```js
-Svg2("path/to/svg/example.svg");.png({ transparent: true }) // set transparency settings
+Svg2("path/to/svg/example.svg").png({ transparent: true }) // set transparency settings
 .toFile("path/to/save/example.png") // save png image to path
 .then(() => {
     console.log("done"); // done
