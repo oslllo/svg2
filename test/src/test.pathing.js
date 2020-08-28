@@ -12,7 +12,6 @@ describe("pathing", () => {
 		var source = "test/assets/svgs/normal.svg";
         var destination = "test/assets/exported/relative.png";
         var expected = "test/assets/expected/relative.png";
-		console.log(is.pathToFile(source));
 		Svg2(source).png().toFile(destination).then(() => {
             assert.isTrue(fs.existsSync(destination), "exported image does not exist.");
             looksame(destination, expected, { strict: true }, (err, data) => {
@@ -29,7 +28,6 @@ describe("pathing", () => {
 		var source = path.resolve("test/assets/svgs/normal.svg");
         var destination = path.resolve("test/assets/exported/absolute.png");
         var expected = path.resolve("test/assets/expected/absolute.png");
-		console.log(is.pathToFile(source));
 		Svg2(source).png().toFile(destination).then(() => {
             assert.isTrue(fs.existsSync(destination), "exported image does not exist.");
             looksame(destination, expected, { strict: true }, (err, data) => {
