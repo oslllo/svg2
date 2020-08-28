@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const Svg2 = require("../../src");
 const looksame = require("looks-same");
-const is = require("../../src/validate");
+const is = require("oslllo-validator");
 const { assert, expect } = require("chai").use(require("chai-as-promised"));
 
 describe("pathing", () => {

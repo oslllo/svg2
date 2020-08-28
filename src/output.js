@@ -2,9 +2,9 @@
 
 const fs = require("fs");
 const jimp = require("jimp");
-const is = require("./validate");
 const error = require("./error");
 const { JSDOM } = require("jsdom");
+const is = require("oslllo-validator");
 const constants = require("./constants");
 
 const formats = constants.FORMATS;

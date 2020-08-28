@@ -1,7 +1,7 @@
 "use strict";
 
-const is = require("./validate");
 const error = require("./error");
+const is = require("oslllo-validator");
 const constants = require("./constants");
 
 const Option = function () {

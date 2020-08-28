@@ -1,7 +1,7 @@
 "use strict";
 
 const jimp = require("jimp");
-const is = require("./validate");
+const is = require("oslllo-validator");
 const constants = require("./constants");
 
 const formats = constants.FORMATS;

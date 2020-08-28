@@ -1,8 +1,8 @@
 "use strict";
 
 const Svg2 = require("..");
-const is = require("./validate");
 const error = require("./error");
+const is = require("oslllo-validator");
 const constants = require("./constants");
 
 const Svg = function (instance) {
