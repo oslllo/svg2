@@ -17,7 +17,7 @@ describe("svg.js", () => {
 			describe("- arguments", () => {
 				describe("[input]", () => {
 					var data = ["valid-svg-element"];
-					var instance = Svg2(path.join(path2.svgs, "normal.svg"));
+					var instance = Svg2(path.join(path2.svgs.index, "normal.svg"));
 					var svg = instance.svg;
 					// throws with invalid svg parameter
 					inputs.invalid(data).forEach((input) => {
@@ -35,11 +35,11 @@ describe("svg.js", () => {
 			});
 			describe("- results", () => {
 				it("can update instance SVG using (SVG Element)", () => {
-					var instance = Svg2(path.join(path2.svgs, "normal.svg"));
+					var instance = Svg2(path.join(path2.svgs.index, "normal.svg"));
 					var svg = instance.svg;
 					var current = svg.html();
 					var update = fs.readFileSync(
-						path.join(path2.svgs, "normal-2.svg"),
+						path.join(path2.svgs.index, "normal-2.svg"),
 						"utf-8"
 					);
 					assert.isTrue(is.svg(current), `current SVG is not a valid svg, ${current}`);
@@ -52,11 +52,11 @@ describe("svg.js", () => {
 					assert.equal(update, svg.html(), "SVG failed to update");
 				});
 				it("can update instance SVG using (SVG String)", () => {
-					var instance = Svg2(path.join(path2.svgs, "normal.svg"));
+					var instance = Svg2(path.join(path2.svgs.index, "normal.svg"));
 					var svg = instance.svg;
 					var current = svg.html();
 					var update = fs.readFileSync(
-						path.join(path2.svgs, "normal-2.svg"),
+						path.join(path2.svgs.index, "normal-2.svg"),
 						"utf-8"
 					);
 					assert.isTrue(is.svg(current), `current SVG is not a valid svg, ${current}`);
@@ -69,10 +69,10 @@ describe("svg.js", () => {
 					assert.equal(update, svg.html(), "SVG failed to update");
 				});
 				it("can update instance SVG using (path)", () => {
-					var instance = Svg2(path.join(path2.svgs, "normal.svg"));
+					var instance = Svg2(path.join(path2.svgs.index, "normal.svg"));
 					var svg = instance.svg;
 					var current = svg.html();
-					var source = path.join(path2.svgs, "normal-2.svg");
+					var source = path.join(path2.svgs.index, "normal-2.svg");
 					var update = fs.readFileSync(source, "utf-8");
 					assert.isTrue(is.svg(current), `current SVG is not a valid svg, ${current}`);
 					assert.isTrue(is.svg(update), `update SVG is not a valid svg, ${update}`);
@@ -94,7 +94,7 @@ describe("svg.js", () => {
 						"object-with-height",
 						"valid-svg-resize-object-width",
 					];
-					var instance = Svg2(path.join(path2.svgs, "normal.svg"));
+					var instance = Svg2(path.join(path2.svgs.index, "normal.svg"));
 					var svg = instance.svg;
 					// throws with invalid input parameter
 					inputs.invalid(data).forEach((input) => {
@@ -112,7 +112,7 @@ describe("svg.js", () => {
 			});
 			describe("- results", () => {
 				it("can set SVG width and height", async () => {
-					var instance = Svg2(path.join(path2.svgs, "normal-2.svg"));
+					var instance = Svg2(path.join(path2.svgs.index, "normal-2.svg"));
 					var svg = instance.svg;
 					var dimensions = { width: 240, height: 240 };
 					assert.notDeepEqual(
@@ -128,7 +128,7 @@ describe("svg.js", () => {
 					);
 				});
 				it("can set SVG height without changing width", () => {
-					var instance = Svg2(path.join(path2.svgs, "normal-2.svg"));
+					var instance = Svg2(path.join(path2.svgs.index, "normal-2.svg"));
 					var svg = instance.svg;
 					var dimensions = { height: 142 };
 					var expected = { height: 142, width: svg.dimensions().width };
@@ -145,7 +145,7 @@ describe("svg.js", () => {
 					);
 				});
 				it("can set SVG height with AUTO width", async () => {
-					var instance = Svg2(path.join(path2.svgs, "normal-2.svg"));
+					var instance = Svg2(path.join(path2.svgs.index, "normal-2.svg"));
 					var svg = instance.svg;
 					var dimensions = { height: 400, width: Svg2.AUTO };
 					var expected = { height: 400, width: 400 };
@@ -162,21 +162,21 @@ describe("svg.js", () => {
 					);
 				});
 				it("can export a 500x500.png resized SVG", async () => {
-					var instance = Svg2(path.join(path2.svgs, "normal-2.svg"));
+					var instance = Svg2(path.join(path2.svgs.index, "normal-2.svg"));
 					var svg = instance.svg;
 					var dimensions = { width: 500, height: 500 };
-					var name = "500x500.png";
-					var destination = path.resolve(path.join(path2.resized, name));
+					var name = "500x500-resized.png";
+					var destination = path.resolve(path.join(path2.generated.index, name));
 					await svg.resize(dimensions).png().toFile(destination);
 					var resized = await jimp.read(destination);
 					var rb = resized.bitmap;
 					assert.deepEqual({ width: rb.width, height: rb.height }, dimensions);
 				});
 				it(`exports a 500x500.png resized SVG that looks correct`, (done) => {
-					var name = "500x500.png";
+					var name = "500x500-resized.png";
 					looksame(
-						path.join(path2.resized, name),
-						path.join(path2.expected, name),
+						path.join(path2.generated.index, name),
+						path.join(path2.expected.svg.resize.index, name),
 						{ strict: true },
 						(error, data) => {
 							assert.isTrue(data.equal);
@@ -190,7 +190,7 @@ describe("svg.js", () => {
 			describe("- results", () => {
 				it("throws when SVG does not have width and height attributes or a viewBox", () => {
 					var instance = Svg2(
-						path.join(path2.svgs, "without-viewbox-or-dimension-attributes.svg")
+						path.join(path2.svgs.index, "without-viewbox-or-dimension-attributes.svg")
 					);
 					var svg = instance.svg;
 					assert.throws(() => svg.dimensions(), TypeError);
@@ -229,12 +229,12 @@ describe("svg.js", () => {
 				svgs.forEach((svg) => {
 					var name = svg.name;
 					it(`can get dimensions for ${name}`, () => {
-						var instance = Svg2(path.join(path2.svgs, name));
+						var instance = Svg2(path.join(path2.svgs.index, name));
 						assert.deepEqual(instance.svg.dimensions(), svg.dimensions);
 					});
 				});
 				it(`can adjust width without changing height`, () => {
-					var instance = Svg2(path.join(path2.svgs, "normal-2.svg"));
+					var instance = Svg2(path.join(path2.svgs.index, "normal-2.svg"));
 					var svg = instance.svg;
 					var current = { width: 24, height: 24 }; // 576 2304
 					assert.deepEqual(
@@ -256,7 +256,7 @@ describe("svg.js", () => {
 					);
 				});
 				it(`can adjust height without changing width`, () => {
-					var instance = Svg2(path.join(path2.svgs, "normal-2.svg"));
+					var instance = Svg2(path.join(path2.svgs.index, "normal-2.svg"));
 					var svg = instance.svg;
 					var current = { width: 24, height: 24 };
 					assert.deepEqual(
@@ -274,7 +274,7 @@ describe("svg.js", () => {
 					assert.equal(scale, 1.5, "svg did not scale correctly");
 				});
 				it(`can adjust width with AUTO height (even)`, () => {
-					var instance = Svg2(path.join(path2.svgs, "normal-2.svg"));
+					var instance = Svg2(path.join(path2.svgs.index, "normal-2.svg"));
 					var svg = instance.svg;
 					var current = { width: 24, height: 24 }; //576
 					assert.deepEqual(
@@ -292,7 +292,7 @@ describe("svg.js", () => {
 					assert.equal(scale, 2, "svg did not scale correctly");
 				});
 				it(`can adjust height with AUTO width (even)`, () => {
-					var instance = Svg2(path.join(path2.svgs, "normal-2.svg"));
+					var instance = Svg2(path.join(path2.svgs.index, "normal-2.svg"));
 					var svg = instance.svg;
 					var current = { width: 24, height: 24 };
 					assert.deepEqual(
@@ -311,7 +311,7 @@ describe("svg.js", () => {
 				});
 				it(`can adjust width with AUTO height (uneven) (positive change)`, () => {
 					var instance = Svg2(
-						path.join(path2.svgs, "with-uneven-px-dimensions.svg")
+						path.join(path2.svgs.index, "with-uneven-px-dimensions.svg")
 					);
 					var svg = instance.svg;
 					var current = { width: 196, height: 46 };
@@ -329,7 +329,7 @@ describe("svg.js", () => {
 				});
 				it(`can adjust height with AUTO width (uneven) (positive change)`, () => {
 					var instance = Svg2(
-						path.join(path2.svgs, "with-uneven-px-dimensions.svg")
+						path.join(path2.svgs.index, "with-uneven-px-dimensions.svg")
 					);
 					var svg = instance.svg;
 					var current = { width: 196, height: 46 };
@@ -347,7 +347,7 @@ describe("svg.js", () => {
 				});
 				it(`can adjust width with AUTO height (uneven) (negetive change)`, () => {
 					var instance = Svg2(
-						path.join(path2.svgs, "with-uneven-px-dimensions.svg")
+						path.join(path2.svgs.index, "with-uneven-px-dimensions.svg")
 					);
 					var svg = instance.svg;
 					var current = { width: 196, height: 46 };
@@ -365,7 +365,7 @@ describe("svg.js", () => {
 				});
 				it(`can adjust height with AUTO width (uneven) (negetive change)`, () => {
 					var instance = Svg2(
-						path.join(path2.svgs, "with-uneven-px-dimensions.svg")
+						path.join(path2.svgs.index, "with-uneven-px-dimensions.svg")
 					);
 					var svg = instance.svg;
 					var current = { width: 196, height: 46 };
@@ -382,7 +382,7 @@ describe("svg.js", () => {
 					);
 				});
 				it(`can scale height and width (even)`, () => {
-					var instance = Svg2(path.join(path2.svgs, "normal-2.svg"));
+					var instance = Svg2(path.join(path2.svgs.index, "normal-2.svg"));
 					var svg = instance.svg;
 					var current = { width: 24, height: 24 };
 					assert.deepEqual(
@@ -399,7 +399,7 @@ describe("svg.js", () => {
 				});
 				it(`can scale height and width (uneven)`, () => {
 					var instance = Svg2(
-						path.join(path2.svgs, "with-uneven-px-dimensions.svg")
+						path.join(path2.svgs.index, "with-uneven-px-dimensions.svg")
 					);
 					var svg = instance.svg;
 					var current = { width: 196, height: 46 };
@@ -420,7 +420,7 @@ describe("svg.js", () => {
 		describe("svg.html()", () => {
 			describe("- results", () => {
 				it(`outputs a valid SVG html string`, () => {
-					var instance = Svg2(path.join(path2.svgs, "normal-2.svg"));
+					var instance = Svg2(path.join(path2.svgs.index, "normal-2.svg"));
 					var svg = instance.svg;
 					assert.isTrue(is.svg(svg.html()));
 				});
@@ -429,7 +429,7 @@ describe("svg.js", () => {
 		describe("svg.element()", () => {
 			describe("- results", () => {
 				it(`outputs a valid SVG element`, () => {
-					var instance = Svg2(path.join(path2.svgs, "normal-2.svg"));
+					var instance = Svg2(path.join(path2.svgs.index, "normal-2.svg"));
 					var svg = instance.svg;
 					assert.equal(svg.element().constructor.name, "SVGSVGElement");
 				});
@@ -447,7 +447,7 @@ describe("svg.js", () => {
 					// throws with invalid input parameter
 					inputs.invalid(data).forEach((input) => {
 						it(`throws with invalid input parameter (${input.description})`, () => {
-							var instance = Svg2(path.join(path2.svgs, "normal-2.svg"));
+							var instance = Svg2(path.join(path2.svgs.index, "normal-2.svg"));
 							var svg = instance.svg;
 							assert.throws(() => svg.dimensionToPx(input.data), TypeError);
 						});
@@ -455,7 +455,7 @@ describe("svg.js", () => {
 					// does not throw with valid input parameter
 					inputs.valid(data).forEach((input) => {
 						it(`does not throw with valid input parameter (${input.description})`, () => {
-							var instance = Svg2(path.join(path2.svgs, "normal-2.svg"));
+							var instance = Svg2(path.join(path2.svgs.index, "normal-2.svg"));
 							var svg = instance.svg;
 							assert.doesNotThrow(() => svg.dimensionToPx(input.data), Error);
 						});
@@ -464,7 +464,7 @@ describe("svg.js", () => {
 			});
 			describe("- results", () => {
 				// check conversion
-				var instance = Svg2(path.join(path2.svgs, "normal-2.svg"));
+				var instance = Svg2(path.join(path2.svgs.index, "normal-2.svg"));
 				var svg = instance.svg;
 				it("can convert raw numbers to pixels", () => {
 					assert.equal(svg.dimensionToPx("233"), 233);

@@ -4,8 +4,8 @@ const fs = require("fs-extra");
 const { path2 } = require("./helper");
 
 function prepare() {
-	["resized", "exported", "converted"].forEach((directory) => {
-		fs.emptyDirSync(path2[directory]);
+    ["generated"].forEach((directory) => {
+		fs.emptyDirSync(path2[directory].index);
 	});
 }
 

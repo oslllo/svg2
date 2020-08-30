@@ -4,8 +4,8 @@ const fs = require("fs");
 const jimp = require("jimp");
 const Svg = require("./svg");
 const error = require("./error");
-const is = require("oslllo-validator");
 const Option = require("./option");
+const is = require("oslllo-validator");
 const Processor = require("./processor");
 const { AUTO, FORMATS } = require("./constants");
 
@@ -22,7 +22,8 @@ const Svg2 = function (input) {
 	this.output = {
 		file: undefined,
 		format: undefined,
-		resize: undefined,
+        resize: undefined,
+        extend: undefined
 	};
 	this.jimp = jimp;
 	this.svg = new Svg(this);
@@ -31,13 +32,6 @@ const Svg2 = function (input) {
 };
 
 Svg2.prototype = {
-	blank: function (
-		width = jimp.AUTO,
-		height = jimp.AUTO,
-		background = "ffffff"
-	) {
-		return new jimp(width, height, background);
-	},
 	check: function (input) {
 		if (arguments.length === 1 && !is.defined(input)) {
 			throw error.invalidParameterError(

@@ -5,13 +5,14 @@ const path = require("path");
 const Svg2 = require("../../src");
 const looksame = require("looks-same");
 const is = require("oslllo-validator");
+const { path2 } = require("./helper");
 const { assert, expect } = require("chai").use(require("chai-as-promised"));
 
 describe("pathing", () => {
 	it(`can process image with (relative paths)`, (done) => {
-		var source = "test/assets/svgs/normal.svg";
-        var destination = "test/assets/exported/relative.png";
-        var expected = "test/assets/expected/relative.png";
+		var source = path.join(path2.svgs.index, "normal.svg");
+        var destination = path.join(path2.generated.index, "relative.png");
+        var expected = path.join(path2.expected.output.index, "relative.png");
 		Svg2(source).png().toFile(destination).then(() => {
             assert.isTrue(fs.existsSync(destination), "exported image does not exist.");
             looksame(destination, expected, { strict: true }, (err, data) => {
@@ -25,9 +26,9 @@ describe("pathing", () => {
         });
     });
     it(`can process image with (absolute paths)`, (done) => {
-		var source = path.resolve("test/assets/svgs/normal.svg");
-        var destination = path.resolve("test/assets/exported/absolute.png");
-        var expected = path.resolve("test/assets/expected/absolute.png");
+        var source = path.join(path2.svgs.index, "normal.svg");
+        var destination = path.join(path2.generated.index, "absolute.png");
+        var expected = path.join(path2.expected.output.index, "absolute.png");
 		Svg2(source).png().toFile(destination).then(() => {
             assert.isTrue(fs.existsSync(destination), "exported image does not exist.");
             looksame(destination, expected, { strict: true }, (err, data) => {
