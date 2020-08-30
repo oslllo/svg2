@@ -1,6 +1,6 @@
-# Svg Options
+# Output Options
 
-Options to perform on the [SVG Element](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg) in the current [Svg2](basic-usage/svg2-constructor) `instance` before outputing.
+Output options available.
 
 - [`png()`](#output-png)
 - [`bmp()`](#output-bmp)

@@ -1,4 +1,4 @@
-#  
+#
 
 * Getting Started
 
@@ -8,6 +8,7 @@
     * Basic Usage
         * [Svg2 (Constructor)](basic-usage/svg2-constructor.md)
         * [Svg Options](basic-usage/svg-options.md)
+        * [Output Image Resizing](basic-usage/output-image-resizing.md)
         * [Output Options](basic-usage/output-options.md)
 
 * Miscellaneous
