@@ -23,7 +23,8 @@ const Svg2 = function (input) {
 		file: undefined,
 		format: undefined,
         resize: undefined,
-        extend: undefined
+        extend: undefined,
+        background: undefined
 	};
 	this.jimp = jimp;
 	this.svg = new Svg(this);

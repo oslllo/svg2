@@ -28,6 +28,9 @@ Object.assign(path2.expected, {
     },
     extend: {
         index: path.join(path2.expected.index, "extend"),
+    },
+    background: {
+        index: path.join(path2.expected.index, "background"),
     }
 });
 

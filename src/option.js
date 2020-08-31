@@ -9,7 +9,8 @@ const Option = function () {
         main: { resolveWithObject: false },
         png: { transparent: false },
         uri: { base64: false, mime: constants.FORMATS.png },
-        extend: { top: 0, right: 0, bottom: 0, left: 0, background: "ffffff" },
+        extend: { top: 0, right: 0, bottom: 0, left: 0, background: "#ffffff" },
+        background: { color: "#ffffff" }
     };
 };
 
