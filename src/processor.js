@@ -60,7 +60,10 @@ Processor.prototype = {
             }
         });
     },
-    blank: function (width = jimp.AUTO, height = jimp.AUTO, background = "ffffff") {
+    blank: function (width = jimp.AUTO, height = jimp.AUTO, background) {
+        if (!background) {
+            background = this.instance.options.get("background").color;
+        }
         return new jimp(width, height, background);
     },
     background: async function (image, dimensions) {
@@ -82,18 +85,22 @@ Processor.prototype = {
             var extended = {
                 background: options.background,
                 height: options.top + options.bottom + height,
-                width: options.left + options.right + width
+                width: options.left + options.right + width,
             };
 
             if (options.left) {
-                x = x + options.left
+                x = x + options.left;
             }
 
             if (options.top) {
-                y = y + options.top
+                y = y + options.top;
             }
 
-            extended.image = await this.blank(extended.width, extended.height, extended.background);
+            extended.image = await this.blank(
+                extended.width,
+                extended.height,
+                extended.background
+            );
 
             image = extended.image.composite(image, x, y);
         }
