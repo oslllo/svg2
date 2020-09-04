@@ -4,27 +4,27 @@ Constructor factory to create an instance of `Svg2`, to which further methods ar
 
 ---
 
-### Usage
+## Usage
 
 ```js
 Svg2("path/to/svg/example.svg");
 ```
 
-### Parameters
+## Parameters
 
 - `source` ([**string**](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [**Buffer**](https://nodejs.org/api/buffer.html)): path to `SVG`, `SVG` string or `Buffer` containing the `SVG`.
 
-### Throws
+## Throws
 
 - [**TypeError**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError): if `parameters` or the `SVG` are invalid.
 
-### Returns
+## Returns
 
 - [**Svg2**](basic-usage/svg2-constructor)
 
-### Examples
+## Examples
 
-#### Using | `path`
+### Using | `path`
 
 ```js
 const Svg2 = require("oslllo-svg2");
@@ -39,7 +39,7 @@ Svg2("path/to/svg/example.svg").png()
 });
 ```
 
-#### Using | `buffer`
+### Using | `buffer`
 
 ```js
 cosnt fs = require("fs");
@@ -57,7 +57,7 @@ Svg2(buffer).png()
 });
 ```
 
-#### Using | `svg string`
+### Using | `svg string`
 
 ```js
 const Svg2 = require("oslllo-svg2");

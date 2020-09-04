@@ -1,4 +1,4 @@
-# Svg Options
+# Svg Element
 
 Options to perform on the [SVG Element](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg) in the current [Svg2](basic-usage/svg2-constructor) `instance` before outputing.
 
@@ -10,7 +10,7 @@ Options to perform on the [SVG Element](https://developer.mozilla.org/en-US/docs
 
 ---
 
-### Usage
+## Usage
 
 ```js
 var instance = Svg2("path/to/svg/example.svg");
@@ -21,11 +21,11 @@ var svg = instance.svg;
 
 <a id="svg-update"></a>
 
-### update()
+## update()
 
 Update instance `SVG` with a new one.
 
-#### Usage
+### Usage
 
 ```js
 var instance = Svg2("path/to/svg/old.svg");
@@ -33,23 +33,23 @@ var svg = instance.svg;
 svg.update("path/to/svg/new.svg");
 ```
 
-##### Parameters
+### Parameters
 
 - `svg` ([**SVGSVGElement**](https://developer.mozilla.org/en-US/docs/Web/API/SVGSVGElement) | [**string**](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [**Buffer**](https://nodejs.org/api/buffer.html)): path to `SVG`, `SVG` string or `Buffer` containing the svg.
 
 - `isElement` [**Boolean**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean): set to `true` if `svg` is an instance of `SVGSVGElement` else set to false. **default(false)**
 
-##### Throws
+### Throws
 
 - [**TypeError**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError): if `parameters` or the `SVG` are invalid.
 
-##### Returns
+### Returns
 
 - [**Svg2**](basic-usage/svg2-constructor)
 
-##### Examples
+### Examples
 
-###### Using | `path`
+#### Using | `path`
 
 ```js
 const Svg2 = require("oslllo-svg2");
@@ -59,7 +59,7 @@ var svg = instance.svg; // get svg option instance
 svg.update("path/to/svg/new.svg"); // update svg
 ```
 
-###### Using | `buffer`
+#### Using | `buffer`
 
 ```js
 const fs = require("fs");
@@ -71,7 +71,7 @@ var buffer = fs.readFileSync("path/to/svg/new.svg"); // get new svg string buffe
 svg.update(buffer); // update svg
 ```
 
-###### Using | `svg string`
+#### Using | `svg string`
 
 ```js
 const Svg2 = require("oslllo-svg2");
@@ -83,7 +83,7 @@ svg.update(`<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewB
 </svg>`); // update svg
 ```
 
-###### Using | `element`
+#### Using | `element`
 
 ```js
 const Svg2 = require("oslllo-svg2");
@@ -98,11 +98,11 @@ svg.update(element); // update svg
 
 <a id="svg-resize"></a>
 
-### resize()
+## resize()
 
 Resize `SVG Element` in current instance.
 
-#### Usage
+### Usage
 
 ```js
 var instance = Svg2("path/to/svg/example.svg");
@@ -110,21 +110,21 @@ var svg = instance.svg;
 svg.resize({ widht: 100, height: 100 });
 ```
 
-##### Parameters
+### Parameters
 
 - `input` ([**Object**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) | [**Number**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)): containing `width` / `height` properties or a `number` to scale the dimensions.
 
-##### Throws
+### Throws
 
 - [**TypeError**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError): if `parameters` are invalid.
 
-##### Returns
+### Returns
 
 - [**Svg2**](basic-usage/svg2-constructor)
 
-##### Examples
+### Examples
 
-###### Using | `object`
+#### Using | `object`
 
 > Adjust both `width` and `height`
 
@@ -182,11 +182,11 @@ console.log(svg.dimensions()); // { width: 48, height: 48 }
 
 <a id="svg-html"></a>
 
-### html()
+## html()
 
 Get instance `SVG` `string` (outerHTML)`.
 
-#### Usage
+### Usage
 
 ```js
 var instance = Svg2("path/to/svg/example.svg");
@@ -194,11 +194,11 @@ var svg = instance.svg;
 svg.html();
 ```
 
-##### Returns
+### Returns
 
 - [**string**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String): instance svg `string` (outerHTML).
 
-##### Examples
+### Examples
 
 ```js
 const Svg2 = require("oslllo-svg2");
@@ -212,11 +212,11 @@ svg.html(); // returns <svg xmlns="http://www.w3.org/2000/svg" width="48" height
 
 <a id="svg-element"></a>
 
-### element()
+## element()
 
 Get instance `SVG` element / `SVGSVGElement` instance.
 
-#### Usage
+### Usage
 
 ```js
 var instance = Svg2("path/to/svg/example.svg");
@@ -224,11 +224,11 @@ var svg = instance.svg;
 svg.element();
 ```
 
-##### Returns
+### Returns
 
 - [**SVGSVGElement**](https://developer.mozilla.org/en-US/docs/Web/API/SVGSVGElement)
 
-##### Examples
+### Examples
 
 ```js
 const Svg2 = require("oslllo-svg2");
@@ -242,11 +242,11 @@ svg.element(); // returns svg element
 
 <a id="svg-dimensions"></a>
 
-### dimensions()
+## dimensions()
 
 Get instance `SVG` dimensions (`width` and `height`).
 
-#### Usage
+### Usage
 
 ```js
 var instance = Svg2("path/to/svg/example.svg");
@@ -254,11 +254,11 @@ var svg = instance.svg;
 svg.dimensions();
 ```
 
-##### Returns
+### Returns
 
-- [**Obeject**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object): containing `width` and `height`
+- [**Object**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object): containing `width` and `height`
 
-##### Examples
+### Examples
 
 ```js
 const Svg2 = require("oslllo-svg2");

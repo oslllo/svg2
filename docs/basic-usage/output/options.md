@@ -15,11 +15,11 @@ Output options available.
 
 <a id="output-png"></a>
 
-### png()
+## png()
 
 Convert `SVG` to `png`.
 
-#### Usage
+### Usage
 
 ```js
 Svg2("path/to/svg/example.svg").png()
@@ -32,22 +32,22 @@ Svg2("path/to/svg/example.svg").png()
 });
 ```
 
-##### Parameters
+### Parameters
 
 - `options` ([**Object**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)): containing the available options to perform on the image before outputing it.
     - `transparent` ([**Boolean**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)): if the `png` image should have a `transparent` background. **default(false)**
 
-##### Throws
+### Throws
 
 - [**TypeError**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError): if `parameters` are invalid.
 
-##### Returns
+### Returns
 
 - [**Svg2**](basic-usage/svg2-constructor)
 
-##### Examples
+### Examples
 
-###### Get | `png with transparent background`
+#### Get | `png with transparent background`
 
 ```js
 Svg2("path/to/svg/example.svg").png({ transparent: true }) // set transparency settings
@@ -64,11 +64,11 @@ Svg2("path/to/svg/example.svg").png({ transparent: true }) // set transparency s
 
 <a id="output-bmp"></a>
 
-### bmp()
+## bmp()
 
 Convert `SVG` to `bmp`.
 
-#### Usage
+### Usage
 
 ```js
 Svg2("path/to/svg/example.svg").bmp()
@@ -81,7 +81,7 @@ Svg2("path/to/svg/example.svg").bmp()
 });
 ```
 
-##### Returns
+### Returns
 
 - [**Svg2**](basic-usage/svg2-constructor)
 
@@ -89,11 +89,11 @@ Svg2("path/to/svg/example.svg").bmp()
 
 <a id="output-jpeg"></a>
 
-### jpeg()
+## jpeg()
 
 Convert `SVG` to `jpeg`.
 
-#### Usage
+### Usage
 
 ```js
 Svg2("path/to/svg/example.svg").jpeg()
@@ -106,7 +106,7 @@ Svg2("path/to/svg/example.svg").jpeg()
 });
 ```
 
-##### Returns
+### Returns
 
 - [**Svg2**](basic-usage/svg2-constructor)
 
@@ -114,11 +114,11 @@ Svg2("path/to/svg/example.svg").jpeg()
 
 <a id="output-tiff"></a>
 
-### tiff()
+## tiff()
 
 Convert `SVG` to `tiff`.
 
-#### Usage
+### Usage
 
 ```js
 Svg2("path/to/svg/example.svg").tiff()
@@ -131,7 +131,7 @@ Svg2("path/to/svg/example.svg").tiff()
 });
 ```
 
-##### Returns
+### Returns
 
 - [**Svg2**](basic-usage/svg2-constructor)
 
@@ -139,11 +139,11 @@ Svg2("path/to/svg/example.svg").tiff()
 
 <a id="output-to-uri"></a>
 
-### toUri()
+## toUri()
 
 Get `SVG` image `URI` or `base64` string.
 
-#### Usage
+### Usage
 
 ```js
 Svg2("path/to/svg/example.svg").toUri()
@@ -156,24 +156,24 @@ Svg2("path/to/svg/example.svg").toUri()
 });
 ```
 
-##### Parameters
+### Parameters
 
 - `options` ([**Object**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)): containing the available options to perform on the image before outputing it.
     - `base64` ([**Boolean**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)): return a `base64` string instead of a `URI` **default(false)**
     - `mime` ([**String**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)): return a `base64` string instead of a `URI` **default("image/png")**
 - `callback` ([**Function**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)): if a callback is set a `Promise` is **not** returned.
 
-##### Throws
+### Throws
 
 - [**TypeError**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError): if `parameters` are invalid.
 
-##### Returns
+### Returns
 
 - [**Promise**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise): **if** `callback` is not set.
 
-##### Examples
+### Examples
 
-###### Get SVG PNG | `URI`
+#### Get SVG PNG | `URI`
 
 ```js
 Svg2("path/to/svg/example.svg").toUri({ base64: false, mime: Svg2.PNG })
@@ -186,7 +186,7 @@ Svg2("path/to/svg/example.svg").toUri({ base64: false, mime: Svg2.PNG })
 });
 ```
 
-###### Get SVG PNG | `base64`
+#### Get SVG PNG | `base64`
 
 ```js
 Svg2("path/to/svg/example.svg").toUri({ base64: true, mime: Svg2.PNG })
@@ -199,7 +199,7 @@ Svg2("path/to/svg/example.svg").toUri({ base64: true, mime: Svg2.PNG })
 });
 ```
 
-###### Get SVG PNG | `base64` | (callback)
+#### Get SVG PNG | `base64` | (callback)
 
 ```js
 Svg2("path/to/svg/example.svg")
@@ -215,11 +215,11 @@ Svg2("path/to/svg/example.svg")
 
 <a id="output-to-file"></a>
 
-### toFile()
+## toFile()
 
 Export `SVG` to file.
 
-#### Usage
+### Usage
 
 ```js
 Svg2("path/to/svg/example.svg").png()
@@ -232,22 +232,22 @@ Svg2("path/to/svg/example.svg").png()
 });
 ```
 
-##### Parameters
+### Parameters
 
 - `destination` ([**String**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)): path to save image.
 - `callback` ([**Function**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)): if a callback is set a `Promise` is **not** returned.
 
-##### Throws
+### Throws
 
 - [**TypeError**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError): if `parameters` are invalid.
 
-##### Returns
+### Returns
 
 - [**Promise**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise): **if** `callback` is not set.
 
-##### Examples
+### Examples
 
-###### Save to path | (promise)
+#### Save to path | (promise)
 
 ```js
 Svg2("path/to/svg/example.svg").png() // to png
@@ -260,7 +260,7 @@ Svg2("path/to/svg/example.svg").png() // to png
 });
 ```
 
-###### Save to path | (callback)
+#### Save to path | (callback)
 
 ```js
 Svg2("path/to/svg/example.svg").png() // to png
@@ -276,11 +276,11 @@ Svg2("path/to/svg/example.svg").png() // to png
 
 <a id="output-to-buffer"></a>
 
-### toBuffer()
+## toBuffer()
 
 Export `SVG` to buffer.
 
-#### Usage
+### Usage
 
 ```js
 Svg2("path/to/svg/example.svg").png()
@@ -293,21 +293,21 @@ Svg2("path/to/svg/example.svg").png()
 });
 ```
 
-##### Parameters
+### Parameters
 
 - `callback` ([**Function**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)): if a callback is set a `Promise` is **not** returned.
 
-##### Throws
+### Throws
 
 - [**TypeError**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError): if `parameters` are invalid.
 
-##### Returns
+### Returns
 
 - [**Promise**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise): **if** `callback` is not set.
 
-##### Examples
+### Examples
 
-###### Get buffer | (promise)
+#### Get buffer | (promise)
 
 ```js
 Svg2("path/to/svg/example.svg").png()
@@ -320,7 +320,7 @@ Svg2("path/to/svg/example.svg").png()
 });
 ```
 
-###### Get buffer | (callback)
+#### Get buffer | (callback)
 
 ```js
 Svg2("path/to/svg/example.svg").png()
@@ -336,37 +336,37 @@ Svg2("path/to/svg/example.svg").png()
 
 <a id="output-to-element"></a>
 
-### toElement()
+## toElement()
 
 Export `SVG` to element.
 
-#### Usage
+### Usage
 
 ```js
 Svg2("path/to/svg/example.svg").toElement();
 ```
 
-##### Parameters
+### Parameters
 
 - `input` ([**string**](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [**Buffer**](https://nodejs.org/api/buffer.html)): path to `SVG`, raw `SVG` string or `Buffer` containing the svg.
 
-##### Throws
+### Throws
 
 - [**TypeError**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError): if `parameters` are invalid.
 
-##### Returns
+### Returns
 
 - [**SVGSVGElement**](https://developer.mozilla.org/en-US/docs/Web/API/SVGSVGElement)
 
-##### Examples
+### Examples
 
-###### Get element | from instance `SVG`
+#### Get element | from instance `SVG`
 
 ```js
     Svg2("path/to/svg/example.svg").toElement();
 ```
 
-###### Get element | from path
+#### Get element | from path
 
 ```js
     Svg2("path/to/svg/example.svg").toElement("path/to/some/other/svg/example.svg");
