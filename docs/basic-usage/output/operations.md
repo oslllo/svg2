@@ -8,11 +8,11 @@ Operation options to perform on the image before output.
 
 <a id="output-image-background"></a>
 
-### background()
+## background()
 
 Change background of the image to the provided background colour.
 
-#### Usage
+### Usage
 
 ```js
 Svg2("path/to/svg/example.svg")
@@ -27,28 +27,28 @@ Svg2("path/to/svg/example.svg")
 });
 ```
 
-##### Parameters
+### Parameters
 
 - `options` ([**Object**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) | [**String**](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)): containing the available options to perform on the image before outputing it.
     - `color` ([**String**](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)): Extension background **[hexadecimal](https://en.wikipedia.org/wiki/Web_colors#Hex_triplet)** color. **default("#ffffff")**
 
-##### Throws
+### Throws
 
 - [**TypeError**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError): if `parameters` are invalid.
 
-##### Returns
+### Returns
 
 - [**Svg2**](basic-usage/svg2-constructor)
 
-##### Examples
+### Examples
 
-###### Image produced from a `SVG` that we are going to be using in our example
+#### Image produced from a `SVG` that we are going to be using in our example
 
-![](images/output/background/background-none.png)
+![background-none](../images/output/background/background-none.png)
 
 ---
 
-###### Background | to "#0252AB"
+##### Background | to "#0252AB"
 
 ```js
 Svg2("path/to/svg/example.svg")
@@ -76,9 +76,8 @@ Svg2("path/to/svg/example.svg")
 });
 ```
 
-`Outputs`
+###### Outputs
 
-
-![](images/output/background/background-blue.png)
+![background-blue](../images/output/background/background-blue.png)
 
 ---

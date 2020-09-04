@@ -8,11 +8,11 @@ Resizing options to perform on the image before output.
 
 <a id="output-image-extend"></a>
 
-### extend()
+## extend()
 
 Extends/pads the edges of the image with the provided background colour.
 
-#### Usage
+### Usage
 
 ```js
 Svg2("path/to/svg/example.svg")
@@ -27,7 +27,7 @@ Svg2("path/to/svg/example.svg")
 });
 ```
 
-##### Parameters
+### Parameters
 
 - `options` ([**Object**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) | [**Number**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)): containing the available options to perform on the image before outputing it.
     - `top` ([**Number**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)): Extend the top part of the output image. **default(0)**
@@ -36,24 +36,23 @@ Svg2("path/to/svg/example.svg")
     - `left` ([**Number**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)): Extend the left part of the output image. **default(0)**
     - `background` ([**String**](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)): Extension background **[hexadecimal](https://en.wikipedia.org/wiki/Web_colors#Hex_triplet)** color. **default("#ffffff")**
 
-
 > If you provide a `Number` to `options` it will change all sides e.g `extend(50)` will extend all sides by 50.
 
-##### Throws
+### Throws
 
 - [**TypeError**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError): if `parameters` are invalid.
 
-##### Returns
+### Returns
 
 - [**Svg2**](basic-usage/svg2-constructor)
 
-##### Examples
+### Examples
 
-###### Image produced from a `SVG` that we are going to be using in our example
+#### Image produced from a `SVG` that we are going to be using in our example
 
-![](images/output/extend/extend-none.png)
+![extend-none](../images/output/extend/extend-none.png)
 
-###### Extend | all sides and make the extension background `red`
+#### Extend | all sides and make the extension background `red`
 
 ```js
 Svg2("path/to/svg/example.svg")
@@ -70,11 +69,11 @@ Svg2("path/to/svg/example.svg")
 
 `Outputs`
 
-![](images/output/extend/extend-all-sides-random.png)
+![extend-all-sides-random](../images/output/extend/extend-all-sides-random.png)
 
 ---
 
-###### Extend | all sides
+#### Extend | all sides
 
 ```js
 Svg2("path/to/svg/example.svg")
@@ -106,11 +105,11 @@ Svg2("path/to/svg/example.svg")
 
 > Extended area was made `green` for better visibility, if no `background` color is provided it defaults to `white` / `#ffffff`
 
-![](images/output/extend/extend-all-sides-50.png)
+![extend-all-sides-50](../images/output/extend/extend-all-sides-50.png)
 
 ---
 
-###### Extend | left side only and make the extension background `red`
+#### Extend | left side only and make the extension background `red`
 
 ```js
 Svg2("path/to/svg/example.svg")
@@ -140,6 +139,6 @@ Svg2("path/to/svg/example.svg")
 
 `Outputs`
 
-![](images/output/extend/extend-left-50.png)
+![extend-left-50](../images/output/extend/extend-left-50.png)
 
 ---

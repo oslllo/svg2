@@ -1,9 +1,9 @@
 
 ![Cover Image](../images/cover.png)
 
-[![Travis (.org)](https://img.shields.io/travis/oslllo/svg2?label=Travis%20CI)](https://travis-ci.org/github/oslllo/svg2)
+[![Travis (.org)](https://img.shields.io/travis/oslllo/svg2)](https://travis-ci.org/github/oslllo/svg2)
 [![npm](https://img.shields.io/npm/v/oslllo-svg2)](https://www.npmjs.com/package/oslllo-svg2)
-[![Coverage Status](https://coveralls.io/repos/github/oslllo/svg2/badge.svg?branch=master)](https://coveralls.io/github/oslllo/svg2?branch=master)
+[![Coverage Status](https://img.shields.io/coveralls/github/oslllo/svg2)](https://coveralls.io/github/oslllo/svg2?branch=master)
 
 ## The Objective
 
@@ -20,9 +20,9 @@ Converting a `SVG` into an image turns out to not be a simple and straight forwa
 
 ---
 
-### Usage Examples
+## Usage Examples
 
-#### Convert a SVG2 `png` and save to path (promise)
+### Convert a SVG2 `png` and save to path (promise)
 
 ```js
 const Svg2 = require("oslllo-svg2");
@@ -37,7 +37,7 @@ Svg2("path/to/svg/example.svg").png()
 });
 ```
 
-#### Convert a SVG2 `png` and save to path (callback)
+### Convert a SVG2 `png` and save to path (callback)
 
 ```js
 const Svg2 = require("oslllo-svg2");
