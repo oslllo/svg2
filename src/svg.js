@@ -119,9 +119,25 @@ Svg.prototype = {
 			);
 		}
 		return dimension;
-	},
+    },
+    viewBox: function (svg) {
+        if (!svg.hasAttribute("viewBox")) {
+            throw error.invalidParameterError(
+				"SVG dimension",
+				"height/width and viewBox attributes to be set",
+				this.instance.svg.html()
+			);
+        }
+        var viewBox = svg.getAttribute("viewBox").split(" ");
+        return {
+            "min-x": Number(viewBox[0]),
+            "min-y":  Number(viewBox[1]),
+            "width":  Number(viewBox[2]),
+            "height":  Number(viewBox[3]),
+        }
+    },
 	dimensions: function () {
-		var svg = this.element();
+        var svg = this.element();
 		var dimension = {
 			names: ["width", "height"],
 			data: { width: 0, height: 0 },
@@ -130,28 +146,28 @@ Svg.prototype = {
 		var dd = dimension.data;
 		if (svg.hasAttribute(dn[0]) && svg.hasAttribute(dn[1])) {
 			var width = svg.getAttribute(dn[0]);
-			var height = svg.getAttribute(dn[1]);
-			for (var i = 0; i < dn.length; i++) {
-				var name = dn[i];
-				switch (name) {
-					case "width":
-						dd.width = this.dimensionToPx(width);
-						break;
-					case "height":
-						dd.height = this.dimensionToPx(height);
-						break;
-				}
-			}
-		} else if (svg.hasAttribute("viewBox")) {
-			var viewbox = svg.getAttribute("viewBox").split(" ");
-			dd.width = Number(viewbox[2]);
-			dd.height = Number(viewbox[3]);
+            var height = svg.getAttribute(dn[1]);
+            if (!width.includes("%") && !height.includes("%")) {
+                for (var i = 0; i < dn.length; i++) {
+                    var name = dn[i];
+                    switch (name) {
+                        case "width":
+                            dd.width = this.dimensionToPx(width);
+                            break;
+                        case "height":
+                            dd.height = this.dimensionToPx(height);
+                            break;
+                    }
+                }
+            } else {
+                var viewbox = this.viewBox(svg);
+                dd.width = viewbox.width;
+                dd.height = viewbox.height;
+            }
 		} else {
-			throw error.invalidParameterError(
-				"SVG dimension",
-				"height/width and viewBox attributes to be set",
-				this.instance.svg.html()
-			);
+			var viewbox = this.viewBox(svg);
+			dd.width = viewbox.width;
+			dd.height = viewbox.height;
 		}
 		return dd;
 	},

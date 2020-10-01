@@ -224,6 +224,14 @@ describe("svg.js", () => {
 					{
 						name: "with-rem-dimensions.svg",
 						dimensions: { width: 120, height: 120 },
+                    },
+                    {
+						name: "with-%-dimensions.svg",
+						dimensions: { width: 24, height: 24 },
+                    },
+                    {
+						name: "with-%-and-px-dimensions.svg",
+						dimensions: { width: 24, height: 24 },
 					},
 				];
 				svgs.forEach((svg) => {
