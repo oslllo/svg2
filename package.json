@@ -48,7 +48,7 @@
   "homepage": "https://docs.oslllo.com/svg2/master",
   "dependencies": {
     "canvas": "^2.6.1",
-    "jimp": "^0.14.0",
+    "jimp": "^0.16.1",
     "jsdom": "^16.4.0",
     "oslllo-validator": "0.0.1"
   },
