@@ -4,7 +4,6 @@ const path = require("path");
 const fs = require("fs-extra");
 const Svg2 = require("../../src");
 const looksame = require("looks-same");
-const validator = require("validator");
 const is = require("oslllo-validator");
 const { path2, inputs } = require("./helper");
 const constants = require("../../src/constants");
@@ -197,11 +196,11 @@ describe("output.js", () => {
 		describe("- results", () => {
 			it("can ouput a valid dataURI string (promise)", async () => {
 				var uri = await Svg2(path.join(path2.svgs.index, "normal.svg")).toUri();
-				assert.equal(validator.isDataURI(uri), true);
+				assert.equal(is.dataURI(uri), true);
 			});
 			it("can ouput a valid dataURI string (callback)", (done) => {
 				Svg2(path.join(path2.svgs.index, "normal.svg")).toUri((err, uri) => {
-					assert.equal(validator.isDataURI(uri), true);
+					assert.equal(is.dataURI(uri), true);
 					done(err);
 				});
 			});
@@ -209,13 +208,13 @@ describe("output.js", () => {
 				var base64 = await Svg2(path.join(path2.svgs.index, "normal.svg")).toUri({
 					base64: true,
 				});
-				assert.equal(validator.isBase64(base64), true);
+				assert.equal(is.base64(base64), true);
 			});
 			it("can output a valid base64 string (callback)", (done) => {
 				Svg2(path.join(path2.svgs.index, "normal.svg")).toUri(
 					{ base64: true },
 					(err, base64) => {
-						assert.equal(validator.isBase64(base64), true);
+						assert.equal(is.base64(base64), true);
 						done(err);
 					}
 				);
