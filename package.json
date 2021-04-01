@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "nyc mocha --sort",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "node_modules/.bin/nyc report --reporter=lcovonly"
   },
   "repository": {
     "type": "git",
@@ -29,8 +29,7 @@
     "svg-to-element"
   ],
   "author": "Ghustavh Ehm <https://github.com/Ghustavh97>",
-  "contributors": [
-    {
+  "contributors": [{
       "name": "Ghustavh Ehm",
       "email": "Ghustavh97@gmail.com",
       "url": "https://github.com/Ghustavh97"
