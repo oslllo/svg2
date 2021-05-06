@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Miscellaneous Chores
 
+* update dependencies
 * release 0.2.4 ([1288793](https://www.github.com/oslllo/svg2/commit/12887938271b92f466bec2de7da94034685aa65b))
 
 ## [0.2.3] - 2021/4/1
