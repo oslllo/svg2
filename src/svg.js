@@ -96,17 +96,52 @@ Svg.prototype = {
 				input
 			);
 		}
-		var units = ["rem", "px", "em"];
+
+    function round(input) {
+      return Math.round(( input + Number.EPSILON) * 100) / 100;
+    }
+
+		var units = ["rem", "px", "em", "ex", "ch", "cm", "mm", "q", "in", "pc", "pt"];
+    var convert = false;
 		for (var i = 0; i < units.length; i++) {
 			var unit = units[i];
-			if (input.search(unit) !== -1) {
+      convert = typeof input == "string" && input.search(unit) !== -1;
+			if (convert) {
 				input = input.replace(unit, "");
-				if (unit === "px") {
-					break;
-				} else if (unit === "em" || unit === "rem") {
-					input = input * 16;
-					break;
-				}
+        const cm = 96 / 2.54
+        const inch = 2.54 * cm;
+        switch(unit.toLowerCase()) {
+          case "px":
+            break;
+          case "em":
+          case "rem":
+            input = input * 16; // we can get away with this because we use jsdom.
+            break;
+          case "ex":
+            input = round(input * 7.156);
+            break;
+          case "ch":
+            input = input * 8;
+            break;
+          case "cm":
+            input = input * cm;
+            break;
+          case "mm":
+            input = round(input * (1 / 10 * cm));
+            break;
+          case "q":
+            input = input * (1 / 40 * cm);
+            break;
+          case "in":
+            input = input * inch;
+            break;
+          case "pc":
+            input = input * (1 / 6 * inch);
+            break;
+          case "pt":
+            input = input * (1 / 72 * inch);
+            break;
+        }
 			}
 		}
 		var dimension = Number(input);
@@ -146,7 +181,7 @@ Svg.prototype = {
 		if (svg.hasAttribute(dn[0]) && svg.hasAttribute(dn[1])) {
 			var width = svg.getAttribute(dn[0]);
             var height = svg.getAttribute(dn[1]);
-            if (!width.includes("%") && !height.includes("%")) {
+            if (!width.includes("%") && !width.includes("vw") && !height.includes("%") && !height.includes("vh")) {
                 for (var i = 0; i < dn.length; i++) {
                     var name = dn[i];
                     switch (name) {

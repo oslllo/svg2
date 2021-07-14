@@ -234,6 +234,10 @@ describe("svg.js", () => {
 						name: "with-px-dimensions.svg",
 						dimensions: { width: 96, height: 96 },
 					},
+          {
+            name: "with-vh-vw-dimensions.svg",
+            dimensions: { width: 24, height: 24 },
+          },
 					{
 						name: "with-viewbox-only.svg",
 						dimensions: { width: 24, height: 24 },
@@ -251,6 +255,14 @@ describe("svg.js", () => {
 						dimensions: { width: 24, height: 24 },
 					},
 				];
+
+        ['ch', 'cm', 'ex', 'in', 'mm', 'pc', 'pt', 'q'].forEach(function(d) {
+          svgs.push({
+            name: `with-${d}-dimensions.svg`,
+            dimensions: { width: 24, height: 24 }
+          });
+        });
+
 				svgs.forEach((svg) => {
 					var name = svg.name;
 					it(`can get dimensions for ${name}`, () => {
@@ -464,6 +476,7 @@ describe("svg.js", () => {
 			describe("- arguments", () => {
 				describe("[input]", () => {
 					var data = [
+            "number",
 						"valid-svg-dimension-string-number",
 						"valid-svg-dimension-px",
 						"valid-svg-dimension-em",
