@@ -43,11 +43,10 @@ Svg.prototype = {
 			output[dimension] = input[dimension];
 			if (input[opposite] === constants.AUTO) {
 				output[opposite] =
-					input[dimension] - current[dimension] + current[opposite];
+          output[opposite] = (input[dimension] / current[dimension]) * current[opposite];
 			} else {
 				output[opposite] = current[opposite];
 			}
-			// output.scale = input[dimension] / current[dimension];
 			return output;
 		}
 		if (is.number(input)) {

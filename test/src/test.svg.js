@@ -144,6 +144,23 @@ describe("svg.js", () => {
 						"dimensions match after change"
 					);
 				});
+        it("can set SVG height with AUTO width when dimensions are uneven", async () => {
+					var instance = Svg2(path.join(path2.svgs.index, "uneven-dimensions.svg"));
+					var svg = instance.svg;
+					var dimensions = { height: 24, width: Svg2.AUTO };
+					var expected = { height: 24, width: 48 };
+					assert.notDeepEqual(
+						svg.dimensions(),
+						expected,
+						"current and new dimensions do not match before change"
+					);
+					svg.resize(dimensions);
+					assert.deepEqual(
+						svg.dimensions(),
+						expected,
+						"dimensions match after change"
+					);
+				});
 				it("can set SVG height with AUTO width", async () => {
 					var instance = Svg2(path.join(path2.svgs.index, "normal-2.svg"));
 					var svg = instance.svg;
@@ -207,7 +224,7 @@ describe("svg.js", () => {
 					},
 					{
 						name: "with-uneven-px-dimensions.svg",
-						dimensions: { width: 196, height: 46 },
+						dimensions: { width: 19, height: 13.444 },
 					},
 					{
 						name: "with-em-dimensions.svg",
@@ -322,7 +339,7 @@ describe("svg.js", () => {
 						path.join(path2.svgs.index, "with-uneven-px-dimensions.svg")
 					);
 					var svg = instance.svg;
-					var current = { width: 196, height: 46 };
+					var current = { width: 19, height: 13.444 };
 					assert.deepEqual(
 						svg.dimensions(),
 						current,
@@ -331,7 +348,7 @@ describe("svg.js", () => {
 					svg.resize({ width: 200, height: Svg2.AUTO });
 					assert.deepEqual(
 						svg.dimensions(),
-						{ width: 200, height: 50 },
+						{ width: 200, height: 141.51578947368424 },
 						"svg dimensions did not update correctly"
 					);
 				});
@@ -340,7 +357,7 @@ describe("svg.js", () => {
 						path.join(path2.svgs.index, "with-uneven-px-dimensions.svg")
 					);
 					var svg = instance.svg;
-					var current = { width: 196, height: 46 };
+					var current = { width: 19, height: 13.444 };
 					assert.deepEqual(
 						svg.dimensions(),
 						current,
@@ -349,7 +366,7 @@ describe("svg.js", () => {
 					svg.resize({ width: Svg2.AUTO, height: 50 });
 					assert.deepEqual(
 						svg.dimensions(),
-						{ width: 200, height: 50 },
+						{ width: 70.66349300803333, height: 50 },
 						"svg dimensions did not update correctly"
 					);
 				});
@@ -358,7 +375,7 @@ describe("svg.js", () => {
 						path.join(path2.svgs.index, "with-uneven-px-dimensions.svg")
 					);
 					var svg = instance.svg;
-					var current = { width: 196, height: 46 };
+					var current = { width: 19, height: 13.444 };
 					assert.deepEqual(
 						svg.dimensions(),
 						current,
@@ -367,7 +384,7 @@ describe("svg.js", () => {
 					svg.resize({ width: 190, height: Svg2.AUTO });
 					assert.deepEqual(
 						svg.dimensions(),
-						{ width: 190, height: 40 },
+						{ width: 190, height: 134.44 },
 						"svg dimensions did not update correctly"
 					);
 				});
@@ -376,7 +393,7 @@ describe("svg.js", () => {
 						path.join(path2.svgs.index, "with-uneven-px-dimensions.svg")
 					);
 					var svg = instance.svg;
-					var current = { width: 196, height: 46 };
+					var current = { width: 19, height: 13.444 };
 					assert.deepEqual(
 						svg.dimensions(),
 						current,
@@ -385,7 +402,7 @@ describe("svg.js", () => {
 					svg.resize({ width: Svg2.AUTO, height: 40 });
 					assert.deepEqual(
 						svg.dimensions(),
-						{ width: 190, height: 40 },
+						{ width: 56.53079440642666, height: 40 },
 						"svg dimensions did not update correctly"
 					);
 				});
@@ -410,7 +427,7 @@ describe("svg.js", () => {
 						path.join(path2.svgs.index, "with-uneven-px-dimensions.svg")
 					);
 					var svg = instance.svg;
-					var current = { width: 196, height: 46 };
+					var current = { width: 19, height: 13.444 };
 					assert.deepEqual(
 						svg.dimensions(),
 						current,
@@ -419,7 +436,7 @@ describe("svg.js", () => {
 					svg.resize(2);
 					assert.deepEqual(
 						svg.dimensions(),
-						{ width: 392, height: 92 },
+						{ width: 38, height: 26.888 },
 						"svg dimensions did not update correctly"
 					);
 				});
