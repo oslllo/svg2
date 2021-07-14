@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0](https://www.github.com/oslllo/svg2/compare/v0.2.4...v0.3.0) (2021-07-14)
+
+
+### Features
+
+* add support for svgs with "ex", "ch", "cm", "mm", "q", "in", "pc", "pt" dimensions ([6c5bca1](https://www.github.com/oslllo/svg2/commit/6c5bca16e8a123ec3d9b821ffed8138e56630778))
+
+
+### Bug Fixes
+
+* Svg2.AUTO outputting wrong dimensions on resize() ([fbd2431](https://www.github.com/oslllo/svg2/commit/fbd24319de0b9f8a62955809d42a4f433dc70186))
+* vulnerabilities ([9729786](https://www.github.com/oslllo/svg2/commit/97297861d21ddafc75b38a004ceea7c449f0a743))
+
 ### [0.2.4](https://www.github.com/oslllo/svg2/compare/v0.2.3...v0.2.4) (2021-05-06)
 
 
