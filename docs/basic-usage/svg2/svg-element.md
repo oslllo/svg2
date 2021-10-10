@@ -107,7 +107,7 @@ Resize `SVG Element` in current instance.
 ```js
 var instance = Svg2("path/to/svg/example.svg");
 var svg = instance.svg;
-svg.resize({ widht: 100, height: 100 });
+svg.resize({ width: 100, height: 100 });
 ```
 
 ### Parameters
