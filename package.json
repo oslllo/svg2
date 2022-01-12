@@ -1,6 +1,6 @@
 {
   "name": "oslllo-svg2",
-  "version": "0.3.1",
+  "version": "1.0.0",
   "description": "Convert a SVG to multiple image formats (without puppeteer or a headless browser)",
   "main": "src/index.js",
   "scripts": {
@@ -29,7 +29,8 @@
     "svg-to-element"
   ],
   "author": "Ghustavh Ehm <https://github.com/Ghustavh97>",
-  "contributors": [{
+  "contributors": [
+    {
       "name": "Ghustavh Ehm",
       "email": "Ghustavh97@gmail.com",
       "url": "https://github.com/Ghustavh97"

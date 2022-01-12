@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0](https://www.github.com/oslllo/svg2/compare/v0.3.1...v1.0.0) (2022-01-12)
+
+
+### Bug Fixes
+
+* **pkg:** switch to svg2png-wasm-node-10 for node 10+ support ([47bce23](https://www.github.com/oslllo/svg2/commit/47bce23d974c0d957119c28738a1c92a1c7a2541))
+* **test:** resolve wasm ([72d7bf4](https://www.github.com/oslllo/svg2/commit/72d7bf4d7683a470249a4ec71dee9747b3b8e3aa))
+
+
+### Miscellaneous Chores
+
+* release 1.0.0 ([45c30f6](https://www.github.com/oslllo/svg2/commit/45c30f60bcc2d67d003c95de4a681b7d9fd09947))
+
 ### [0.3.1](https://www.github.com/oslllo/svg2/compare/v0.3.0...v0.3.1) (2021-09-05)
 
 
