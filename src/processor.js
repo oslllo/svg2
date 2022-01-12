@@ -58,30 +58,6 @@ Processor.prototype = {
         callback(error);
       });
   },
-  // process: function (callback) {
-  //   var i = this.instance;
-  //   i.toUri({ mime: formats.png, base64: true }).then(async (uri) => {
-  //     try {
-  //       var png = await jimp.read(Buffer.from(uri, "base64"));
-  //       /**
-  //        * @ignore
-  //        * @description - Because only pngs can be transparent
-  //        * */
-  //       if (!i.options.get("png").transparent || i.output.format !== formats.png) {
-  //         var dimensions = i.svg.dimensions();
-  //         png = await this.background(png, dimensions);
-  //       }
-  //       for (var format in formats) {
-  //         if (formats[format] === i.output.format) {
-  //           png.getBuffer(formats[format], callback);
-  //           break;
-  //         }
-  //       }
-  //     } catch (err) {
-  //       callback(err);
-  //     }
-  //   });
-  // },
   blank: function (width = jimp.AUTO, height = jimp.AUTO, background) {
     if (!background) {
       background = this.instance.options.get("background").color;
