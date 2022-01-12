@@ -3,7 +3,6 @@
 const fs = require("fs");
 const jimp = require("jimp");
 const error = require("./error");
-const { JSDOM } = require("jsdom");
 const domino = require("domino");
 const is = require("oslllo-validator");
 const constants = require("./constants");
