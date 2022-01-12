@@ -29,8 +29,7 @@
     "svg-to-element"
   ],
   "author": "Ghustavh Ehm <https://github.com/Ghustavh97>",
-  "contributors": [
-    {
+  "contributors": [{
       "name": "Ghustavh Ehm",
       "email": "Ghustavh97@gmail.com",
       "url": "https://github.com/Ghustavh97"
@@ -47,10 +46,10 @@
   },
   "homepage": "https://docs.oslllo.com/svg2/master",
   "dependencies": {
-    "canvas": "^2.8.0",
+    "domino": "^2.1.6",
     "jimp": "^0.16.1",
-    "jsdom": "^16.7.0",
-    "oslllo-validator": "2.0.1"
+    "oslllo-validator": "2.0.1",
+    "svg2png-wasm-node-10": "^1.3.1"
   },
   "devDependencies": {
     "chai": "^4.3.4",
