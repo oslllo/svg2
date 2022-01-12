@@ -4,6 +4,8 @@
 [![npm](https://img.shields.io/npm/v/oslllo-svg2)](https://www.npmjs.com/package/oslllo-svg2)
 [![Coverage Status](https://img.shields.io/coveralls/github/oslllo/svg2)](https://coveralls.io/github/oslllo/svg2?branch=master)
 
+## 🎉 v1.0.0 Removed `Canvas & JSDOM` no more slow `npm install` cycles.
+
 ## Documentation, Installation, and Usage Instructions
 
 See the full installation and usage documentation [HERE](https://docs.oslllo.com/svg2/master/).
