@@ -6,9 +6,10 @@ const error = require("./error");
 const is = require("oslllo-validator");
 const constants = require("./constants");
 const { svg2png, initialize } = require("svg2png-wasm");
+const wasm = require.resolve("svg2png-wasm").replace(/(svg2png-wasm).*/, "$1/svg2png_wasm_bg.wasm");
 
 const init = async () => {
-  await initialize(fs.readFileSync("./node_modules/svg2png-wasm/svg2png_wasm_bg.wasm"));
+  await initialize(fs.readFileSync(wasm));
 };
 
 let initPromise;
