@@ -8,14 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.0.0](https://www.github.com/oslllo/svg2/compare/v1.0.0...v2.0.0) (2022-01-21)
 
 
-### Bug Fixes
+This version did not break the api so upgrading from `< v0.3.1` without any changes should be fine. The reason for the major version change is just in case something did break.
 
-* **changelog:** v1.0.0 notes ([62591bf](https://www.github.com/oslllo/svg2/commit/62591bf15288790dc0524ab5fca3dc5917bac139))
+### Refactored
 
+- migrate from svg2png-wasm to @resvg/resvg-js for better performance ([#27](https://github.com/oslllo/svg2/pull/27))
 
-### Miscellaneous Chores
-
-* release 2.0.0 ([4c746e0](https://www.github.com/oslllo/svg2/commit/4c746e015f001c186bb9b8b7cb4293ebf993615d))
 
 ## [1.0.0](https://www.github.com/oslllo/svg2/compare/v0.3.1...v1.0.0) (2022-01-12)
 
