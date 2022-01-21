@@ -1,19 +1,10 @@
 "use strict";
 
-const fs = require("fs");
 const Svg2 = require("..");
 const error = require("./error");
 const is = require("oslllo-validator");
 const constants = require("./constants");
-const { svg2png, initialize } = require("svg2png-wasm-node-10");
-const wasm = require.resolve("svg2png-wasm-node-10").replace(/(svg2png-wasm-node-10).*/, "$1/svg2png_wasm_bg.wasm");
-
-const init = async () => {
-  await initialize(fs.readFileSync(wasm));
-};
-
-let initPromise;
-
+const { renderAsync } = require("@resvg/resvg-js");
 const Svg = function (instance) {
   this.instance = instance;
   this.update(instance.toElement(instance.input.string), true);
@@ -86,10 +77,8 @@ Svg.prototype = {
     return this.instance.input.string;
   },
   png: async function (svg) {
-    initPromise = initPromise || init();
-    await initPromise;
-    const png = await svg2png(svg);
-    return Buffer.from(png);
+    const png = await renderAsync(svg);
+    return png;
   },
   element: function () {
     return this.instance.input.element;
