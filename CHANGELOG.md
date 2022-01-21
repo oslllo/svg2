@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0](https://www.github.com/oslllo/svg2/compare/v1.0.0...v2.0.0) (2022-01-21)
+
+
+### Bug Fixes
+
+* **changelog:** v1.0.0 notes ([62591bf](https://www.github.com/oslllo/svg2/commit/62591bf15288790dc0524ab5fca3dc5917bac139))
+
+
+### Miscellaneous Chores
+
+* release 2.0.0 ([4c746e0](https://www.github.com/oslllo/svg2/commit/4c746e015f001c186bb9b8b7cb4293ebf993615d))
+
 ## [1.0.0](https://www.github.com/oslllo/svg2/compare/v0.3.1...v1.0.0) (2022-01-12)
 
 This version did not break the api so upgrading from `< v0.3.1` without any changes should be fine. The reason for the major version change is just in case something did break.
