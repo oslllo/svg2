@@ -77,8 +77,15 @@ Svg.prototype = {
     return this.instance.input.string;
   },
   png: async function (svg) {
-    const png = await renderAsync(svg);
-    return png;
+    const opts = {
+      font: {
+        loadSystemFonts: false, // It will be faster to disable loading system fonts.
+      },
+    };
+    const resvg = await renderAsync(svg, opts);
+    const pngBuffer = resvg.asPng();
+
+    return pngBuffer;
   },
   element: function () {
     return this.instance.input.element;
