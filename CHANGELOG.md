@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [2.0.2](https://www.github.com/oslllo/svg2/compare/v2.0.0...v2.0.2) (2022-07-16)
+
+
+### Miscellaneous Chores
+
+* release 2.0.2 ([437c255](https://www.github.com/oslllo/svg2/commit/437c2555cf0456c2fd7651af4f0a1ba16c288896))
+
 ## [2.0.0](https://www.github.com/oslllo/svg2/compare/v1.0.0...v2.0.0) (2022-01-21)
 
 
