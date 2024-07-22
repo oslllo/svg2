@@ -47,7 +47,7 @@
   },
   "homepage": "https://docs.oslllo.com/svg2/master",
   "dependencies": {
-    "@resvg/resvg-js": "^2.1.0",
+    "@resvg/resvg-js": "^2.6.2",
     "domino": "^2.1.6",
     "jimp": "^0.22.12",
     "oslllo-validator": "3.1.0"
