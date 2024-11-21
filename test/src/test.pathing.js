@@ -41,4 +41,20 @@ describe("pathing", () => {
             done(err);
         });
 	});
+  it(`can process image with (text)`, (done) => {
+        var source = path.join(path2.svgs.index, "text.svg");
+        var destination = path.join(path2.generated.index, "text.png");
+        var expected = path.join(path2.expected.output.index, "text.png");
+		Svg2(source).png().toFile(destination).then(() => {
+            assert.isTrue(fs.existsSync(destination), "exported image does not exist.");
+            looksame(destination, expected, { strict: true }, (err, data) => {
+                if (data) {
+                    assert.isTrue(data.equal, "images are not equal");
+                }
+                done(err);
+            });
+        }).catch((err) => {
+            done(err);
+        });
+	});
 });

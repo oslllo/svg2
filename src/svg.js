@@ -79,7 +79,7 @@ Svg.prototype = {
   png: async function (svg) {
     const opts = {
       font: {
-        loadSystemFonts: false, // It will be faster to disable loading system fonts.
+        loadSystemFonts: true, // It will be faster to disable loading system fonts.
       },
     };
     const resvg = await renderAsync(svg, opts);
