@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.0](https://github.com/oslllo/svg2/compare/v4.0.0...v5.0.0) (2025-12-22)
+
+
+### Bug Fixes
+
+* **security:** npm audit ([b543ac4](https://github.com/oslllo/svg2/commit/b543ac44d51ad4f33537b4b45cf62e4738bda311))
+* **security:** npm audit --force ([5ab2371](https://github.com/oslllo/svg2/commit/5ab237182e2b407f8d58763e8d46ce4b6e6d027f))
+
+
+### Miscellaneous Chores
+
+* release 5.0.0 ([edfd75d](https://github.com/oslllo/svg2/commit/edfd75d9df835a9c9fecba5b3d720802b44cf014))
+
 ## [4.0.0](https://github.com/oslllo/svg2/compare/v3.0.0...v4.0.0) (2024-11-21)
 
 
